@@ -1,0 +1,6 @@
+cloud-vision.json
+*.pyc
+
+xml/
+ghostdriver.log
+*.png

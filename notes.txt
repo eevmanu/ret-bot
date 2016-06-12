@@ -1,0 +1,4 @@
+create a virtualenv
+    mkvirtualenv selenium
+install phantomjs
+    sudo apt-get install phantomjs

@@ -1,0 +1,63 @@
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'BELLS AZUCAR'     , '07750020644878' , '6.09'  , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'HARINA B.FLO'     , '07750243006880' , '6.2'   , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'CREM.LA'          , '07613032920524' , '3.0'   , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'GLORIACALC'       , '07751271019620' , '4.1'   , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'GALL.AGUA CO'     , '07750885002172' , '2.6'   , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'POLVO PHORN'      , '07622300051822' , '1.09'  , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'DONOF.CLASI'      , '07613035379022' , '1.2'   , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'HUEV QUINC'       , '07750020652903' , '5.69'  , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'PROT LIQ AV'      , '07702010420313' , '8.9'   , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'H&S MEN700ML'     , '07506295355090' , '33.9'  , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'SAPOLIO DESM'     , '07751851016568' , '5.59'  , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'SAP LEJ ORI'      , '07751851017343' , '3.45'  , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'PANTENE SH L'     , '07501001165314' , '17.9'  , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'ELITE PANUEL'     , '07759185002141' , '3.6'   , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'PT ELITE 2UN'     , '07759185004008' , '7.5'   , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id)values (''  , 'ELITE PLUSX24'    , '07759185003308' , '20.41' , 'NIU' , false , 'BA46-1183868' , 'apsdjpasd')
+
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'TOAMAN BLANC'     , '00000009929036' , '13.93' , 'NIU' , false , 'BA50-3376938' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'PAN GRANEL'       , '00000000103107' , '5.95'  , 'KGM' , false , 'BA50-3376938' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'FILETE PECHU'     , '00000000126076' , '24.45' , 'KGM' , false , 'BA50-3376938' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'FILETE PIERN'     , '00000000110709' , '21.99' , 'KGM' , false , 'BA50-3376938' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'SASAMI POLLO'     , '00000000102322' , '23.99' , 'KGM' , false , 'BA50-3376938' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'FILETE PIERN'     , '00000000110709' , '21.99' , 'KGM' , false , 'BA50-3376938' , 'apsdjpasd')
+
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'TASK PANO OJ'     , '07806810014021' , '9.9'   , 'NIU' , false , 'BA55-2081122' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'PH ULTRA DUO'     , '07759185004404' , '16.9'  , 'NIU' , false , 'BA55-2081122' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'BOREAL CURITA'    , '07752836001098' , '4.49'  , 'NIU' , false , 'BA55-2081122' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'ESPONJ EXFOL'     , '00067944017839' , '3.89'  , 'NIU' , false , 'BA55-2081122' , 'apsdjpasd');
+
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'CUSQ.MALTSIX'     , '07753749000802' , '19.8'  , 'NIU' , false , 'BA55-2359138' , 'apsdjpasd');
+
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'GALL.AGUA CO'     , '07750885002172' , '2.6'   , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'BONLE QPARIA'     , '00000000101707' , '39.5'  , 'KGM' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'YOG.SAUC.GLO'     , '07751271011747' , '6.0'   , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'GLORYOGMANGO'     , '07751271011723' , '6.0'   , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'NESCAFE'          , '07613034251206' , '12.49' , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'MIEL ABEJA'       , '07752223142649' , '12.99' , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'GLORIACALC'       , '07751271019620' , '4.1'   , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'BOLIVAR SUAV'     , '07750243039765' , '11.0'  , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'SUAV.BOLIVAR800M' , '07750243044387' , '11.0'  , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , '3M ESPJ SIST'     , '07702098200029' , '5.1'   , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'QUITA LIMON'      , '00000009511118' , '1.99'  , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'SAPOLIO L.V'      , '07751851003964' , '3.4'   , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'COLGATE X3'       , '07753442351034' , '12.9'  , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'OPAL DETERG'      , '07750243035934' , '16.1'  , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'ELITE TR 24U'     , '07759185004633' , '39.1'  , 'NIU' , false , 'BA55-2381584' , 'apsdjpasd');
+
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'POLLO FRESCO'     , '00000000125956' , '8.49'  , 'KGM' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'HUEV QUINC'       , '07750020652903' , '6.9'   , 'NIU' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'BROCOLI'          , '00000000001267' , '7.99'  , 'KGM' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'CAIGUA'           , '00000000025232' , '0.7'   , 'NIU' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'LIMON ACIDO'      , '00000000002288' , '3.19'  , 'KGM' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'KION'             , '00000000002202' , '3.49'  , 'KGM' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'ESTOFADO CAR'     , '00000000043731' , '5.49'  , 'NIU' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'P HASS MERC'      , '00000000167017' , '6.99'  , 'KGM' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'AJINOM.SB100'     , '07754487116367' , '1.85'  , 'NIU' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'PIMIENTA NEG'     , '07756714000173' , '3.6'   , 'NIU' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'BELLS OREGA'      , '07750427908221' , '1.39'  , 'NIU' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'BELLS CANEL'      , '07750427386050' , '1.99'  , 'NIU' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'MND SATSUMA'      , '00000000020459' , '3.99'  , 'KGM' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'PINA G BABY'      , '00000000126861' , '0.99'  , 'KGM' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'PINA G BABY'      , '00000000126861' , '1.0'   , 'KGM' , false , 'BA63-3069121' , 'apsdjpasd');
+INSERT INTO product (name , description , product_id , price , unit_code , default_uc , invoice_id , fb_id) values ('' , 'COLGATE C2X1'     , '07509546008370' , '6.9'   , 'NIU' , false , 'BA63-3069121' , 'apsdjpasd');

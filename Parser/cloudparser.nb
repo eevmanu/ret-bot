@@ -1,0 +1,634 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     23566,        626]
+NotebookOptionsPosition[     21863,        562]
+NotebookOutlinePosition[     22234,        578]
+CellTagsIndexPosition[     22191,        575]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"resp", "=", 
+  RowBox[{"pPARSERPRODUCTS", "[", 
+   RowBox[{"ToTokens", "[", 
+    RowBox[{"sentences", "[", 
+     RowBox[{"[", "8", "]"}], "]"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.674672286263682*^9, 3.674672303444069*^9}, 
+   3.6746723842525826`*^9, 3.6746761341293697`*^9, {3.674710445946126*^9, 
+   3.6747104533155103`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{"ProductsObjects", "[", 
+        RowBox[{"{", "\<\"lavavajillas\"\>", "}"}], "]"}], "}"}], "]"}]}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{"ProductsObjects", "[", 
+        RowBox[{"{", "\<\"lavavajillas\"\>", "}"}], "]"}], "}"}], "]"}]}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6746722973344717`*^9, 3.6746723038212433`*^9}, 
+   3.674676134463836*^9, 3.6746763558185253`*^9, {3.6747104466401296`*^9, 
+   3.674710453812438*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"ParserProducts", "[", 
+  RowBox[{"{", 
+   RowBox[{"ProductsObjects", "[", 
+    RowBox[{"{", "\"\<lavavajillas\>\"", "}"}], "]"}], "}"}], "]"}]], "Input"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Cases", "[", 
+  RowBox[{
+   RowBox[{"ParserProducts", "[", 
+    RowBox[{"{", 
+     RowBox[{"ProductsObjects", "[", 
+      RowBox[{"{", "\"\<lavavajillas\>\"", "}"}], "]"}], "}"}], "]"}], ",", 
+   RowBox[{
+    RowBox[{"ProductsObjects", "[", "x_", "]"}], "\[RuleDelayed]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\"\<count\>\"", "\[Rule]", "\"\<1\>\""}], ",", 
+      RowBox[{"\"\<presentation\>\"", "\[Rule]", "\"\<default\>\""}], ",", 
+      RowBox[{"\"\<object\>\"", "\[Rule]", 
+       RowBox[{"x", "[", 
+        RowBox[{"[", "1", "]"}], "]"}]}]}], "}"}]}], ",", "\[Infinity]"}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6747104757687216`*^9, 3.674710545117134*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"\<\"count\"\>", "\[Rule]", "\<\"1\"\>"}], ",", 
+    RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"default\"\>"}], ",", 
+    RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"lavavajillas\"\>"}]}], "}"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{
+  3.674710491569423*^9, {3.674710527385831*^9, 3.6747105459410634`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"parserToJson", "[", "query_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "parsed", ",", "verb", ",", "adverb", ",", "subj", ",", "mult", ",", 
+       "po"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"parsed", "=", 
+       RowBox[{"pPARSERPRODUCTS", "[", 
+        RowBox[{"ToTokens", "[", "query", "]"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"MatchQ", "[", 
+         RowBox[{"parsed", ",", 
+          RowBox[{"{", "}"}]}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"\"\<status\>\"", "\[Rule]", "\"\<failed\>\""}], "}"}], ",", 
+        RowBox[{"(", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"parsed", "=", 
+           RowBox[{"parsed", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"verb", "=", 
+           RowBox[{"Cases", "[", 
+            RowBox[{"parsed", ",", 
+             RowBox[{
+              RowBox[{"Verb", "[", "x_", "]"}], "\[RuleDelayed]", 
+              RowBox[{"\"\<verb\>\"", "\[Rule]", "x"}]}], ",", 
+             "\[Infinity]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"verb", "=", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"!", 
+              RowBox[{"MatchQ", "[", 
+               RowBox[{"verb", ",", 
+                RowBox[{"{", "}"}]}], "]"}]}], ",", 
+             RowBox[{"verb", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", "verb"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"adverb", "=", 
+           RowBox[{"Cases", "[", 
+            RowBox[{"parsed", ",", 
+             RowBox[{
+              RowBox[{"Adverb", "[", "x_", "]"}], "\[RuleDelayed]", 
+              RowBox[{"\"\<adverb\>\"", "\[Rule]", "x"}]}], ",", 
+             "\[Infinity]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"adverb", "=", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"!", 
+              RowBox[{"MatchQ", "[", 
+               RowBox[{"adverb", ",", 
+                RowBox[{"{", "}"}]}], "]"}]}], ",", 
+             RowBox[{"adverb", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", "adverb"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"subj", "=", 
+           RowBox[{"Cases", "[", 
+            RowBox[{"parsed", ",", 
+             RowBox[{
+              RowBox[{"Subj", "[", "x_", "]"}], "\[RuleDelayed]", 
+              RowBox[{"\"\<subj\>\"", "\[Rule]", 
+               RowBox[{"StringJoin", "[", 
+                RowBox[{"Riffle", "[", 
+                 RowBox[{
+                  RowBox[{"Flatten", "[", 
+                   RowBox[{"{", "x", "}"}], "]"}], ",", "\"\< \>\""}], "]"}], 
+                "]"}]}]}], ",", "\[Infinity]"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"subj", "=", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"MatchQ", "[", 
+              RowBox[{"subj", ",", 
+               RowBox[{"{", "}"}]}], "]"}], ",", 
+             RowBox[{"\"\<subj\>\"", "\[Rule]", "\"\<precio\>\""}], ",", 
+             RowBox[{"subj", "[", 
+              RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"mult", "=", 
+           RowBox[{"Cases", "[", 
+            RowBox[{"parsed", ",", 
+             RowBox[{
+              RowBox[{"Mult", "[", "x_", "]"}], "\[RuleDelayed]", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"\"\<count\>\"", "\[Rule]", 
+                 RowBox[{"(", 
+                  RowBox[{
+                   RowBox[{"x", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "/.", 
+                   RowBox[{
+                    RowBox[{"{", "}"}], "\[Rule]", "1"}]}], ")"}]}], ",", 
+                RowBox[{"\"\<presentation\>\"", "\[Rule]", 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"x", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"2", ",", "1"}], "]"}], "]"}], "/.", 
+                    RowBox[{
+                    RowBox[{"{", "}"}], "\[Rule]", 
+                    RowBox[{"{", "\"\<kg\>\"", "}"}]}]}], ")"}], "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+                RowBox[{"\"\<object\>\"", "\[Rule]", 
+                 RowBox[{"StringJoin", "[", 
+                  RowBox[{"Riffle", "[", 
+                   RowBox[{
+                    RowBox[{"Flatten", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"x", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"2", ",", "2"}], "]"}], "]"}], "}"}], "]"}], ",", 
+                    "\"\< \>\""}], "]"}], "]"}]}]}], "}"}]}], ",", 
+             "\[Infinity]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"po", "=", 
+           RowBox[{"Cases", "[", 
+            RowBox[{"parsed", ",", 
+             RowBox[{
+              RowBox[{"ProductsObjects", "[", "x_", "]"}], "\[RuleDelayed]", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"\"\<count\>\"", "\[Rule]", "\"\<1\>\""}], ",", 
+                RowBox[{"\"\<presentation\>\"", "\[Rule]", "\"\<kg\>\""}], 
+                ",", 
+                RowBox[{"\"\<object\>\"", "\[Rule]", 
+                 RowBox[{"x", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}]}]}], "}"}]}], ",", 
+             "\[Infinity]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"DeleteCases", "[", 
+           RowBox[{
+            RowBox[{"Join", "[", 
+             RowBox[{"{", 
+              RowBox[{"subj", ",", 
+               RowBox[{"\"\<mult\>\"", "\[Rule]", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"MatchQ", "[", 
+                   RowBox[{"mult", ",", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", "po", ",", "mult"}], 
+                 "]"}]}], ",", 
+               RowBox[{"\"\<status\>\"", "\[Rule]", "\"\<ok\>\""}]}], "}"}], 
+             "]"}], ",", 
+            RowBox[{"{", "}"}]}], "]"}]}], ")"}]}], "\[IndentingNewLine]", 
+       "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.674675073399815*^9, 3.674675142915762*^9}, {
+   3.6746759076560183`*^9, 3.6746759096153173`*^9}, {3.674675944326172*^9, 
+   3.6746759849951096`*^9}, {3.6746760675805063`*^9, 3.674676099643983*^9}, {
+   3.674676499216426*^9, 3.6746765628180203`*^9}, {3.674676621499871*^9, 
+   3.67467664662703*^9}, {3.674676691916004*^9, 3.6746768038472443`*^9}, {
+   3.674676926017374*^9, 3.674676936273881*^9}, {3.6746773708375463`*^9, 
+   3.674677377537631*^9}, {3.674677669290825*^9, 3.6746776868896265`*^9}, {
+   3.6746779094567227`*^9, 3.6746779199156704`*^9}, {3.674678119679186*^9, 
+   3.674678125241099*^9}, {3.6746782155340943`*^9, 3.674678233366883*^9}, {
+   3.6746785196667986`*^9, 3.6746785230330105`*^9}, {3.674678557649271*^9, 
+   3.674678582346427*^9}, {3.6746801464624796`*^9, 3.674680149301507*^9}, {
+   3.6746801916522307`*^9, 3.6746802219939976`*^9}, {3.6746803107726583`*^9, 
+   3.674680317182644*^9}, {3.674681750954734*^9, 3.6746817861950207`*^9}, {
+   3.674681819941273*^9, 3.6746818233233423`*^9}, {3.6747057404561286`*^9, 
+   3.674705776505767*^9}, {3.6747058141416607`*^9, 3.674705916644617*^9}, {
+   3.674709629320217*^9, 3.674709643210986*^9}, {3.674710557063244*^9, 
+   3.674710584386679*^9}, {3.6747106194113503`*^9, 3.6747106439061813`*^9}, {
+   3.674710683023806*^9, 3.674710685936948*^9}, 3.67471078868764*^9, {
+   3.674710838923989*^9, 3.6747108674698114`*^9}, {3.6747109074235697`*^9, 
+   3.6747109377933106`*^9}, {3.6747109806148696`*^9, 3.674711130456115*^9}, {
+   3.6747118481490316`*^9, 3.674711855584428*^9}, {3.6747120141715097`*^9, 
+   3.6747120144289103`*^9}, 3.674712058200797*^9, 3.6747121182103267`*^9, {
+   3.674728993303208*^9, 3.6747289973236094`*^9}, {3.6747291272985826`*^9, 
+   3.6747292085151973`*^9}, {3.674731013699435*^9, 3.6747310198238106`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", 
+  RowBox[{"sentences", "[", 
+   RowBox[{"[", "3", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.67471178735433*^9, 3.6747117914371862`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"subj\"\>", "\[Rule]", "\<\"precio\"\>"}], ",", 
+   RowBox[{"\<\"mult\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\<\"count\"\>", "\[Rule]", "1"}], ",", 
+        RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"l\"\>"}], ",", 
+        RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"leche\"\>"}]}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"\<\"count\"\>", "\[Rule]", "5"}], ",", 
+        RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"kg\"\>"}], ",", 
+        RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"azucar rubia\"\>"}]}], 
+       "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6747117878628597`*^9, 3.6747117919904623`*^9}, 
+   3.674711863524624*^9, {3.67471200514463*^9, 3.6747120243690853`*^9}, 
+   3.674712066640872*^9, 3.6747120984088464`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", 
+  RowBox[{"sentences", "[", 
+   RowBox[{"[", "1", "]"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6747060838071556`*^9, 3.6747060871255245`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"subj\"\>", "\[Rule]", "\<\"precio\"\>"}], ",", 
+   RowBox[{"\<\"mult\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\<\"count\"\>", "\[Rule]", "1"}], ",", 
+       RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"kg\"\>"}], ",", 
+       RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"mandarinas\"\>"}]}], "}"}], 
+     "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6747060882978497`*^9, {3.674709504998599*^9, 3.6747095226078577`*^9}, 
+   3.674709608224578*^9, 3.6747096564174356`*^9, 3.674710655465629*^9, 
+   3.6747106907994857`*^9, {3.6747111200477514`*^9, 3.6747111433716125`*^9}, 
+   3.6747120922219496`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", "\"\<a como esta el kilo de fideos\>\"", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.674725871286806*^9, 3.6747258874481945`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"failed\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{{3.6747258743983955`*^9, 3.67472588806971*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", "\"\<del arroz\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6747288671619387`*^9, 3.6747288695154085`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"subj\"\>", "\[Rule]", "\<\"precio\"\>"}], ",", 
+   RowBox[{"\<\"mult\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\<\"count\"\>", "\[Rule]", "1"}], ",", 
+       RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"kg\"\>"}], ",", 
+       RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"arroz\"\>"}]}], "}"}], 
+     "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6747288703951297`*^9, 3.6747290334619913`*^9, {3.6747292009748363`*^9, 
+   3.6747292137996006`*^9}, 3.674731027930481*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", "\"\<de la leche\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6747292231442738`*^9, 3.6747292253297787`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"subj\"\>", "\[Rule]", "\<\"precio\"\>"}], ",", 
+   RowBox[{"\<\"mult\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\<\"count\"\>", "\[Rule]", "1"}], ",", 
+       RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"default\"\>"}], ",", 
+       RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"leche\"\>"}]}], "}"}], 
+     "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.6747292259931774`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", "\"\<de los panes\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.674729236905303*^9, 3.6747292394249954`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"subj\"\>", "\[Rule]", "\<\"precio\"\>"}], ",", 
+   RowBox[{"\<\"mult\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\<\"count\"\>", "\[Rule]", "1"}], ",", 
+       RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"default\"\>"}], ",", 
+       RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"panes\"\>"}]}], "}"}], 
+     "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.674729240221266*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", "\"\<fideos\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6747250496526966`*^9, 3.6747250501484838`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"subj\"\>", "\[Rule]", "\<\"precio\"\>"}], ",", 
+   RowBox[{"\<\"mult\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"\<\"count\"\>", "\[Rule]", "\<\"1\"\>"}], ",", 
+       RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"kg\"\>"}], ",", 
+       RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"fideos\"\>"}]}], "}"}], 
+     "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.6747250509015503`*^9, 3.6747310394720125`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", "\"\<lavavajillas\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6747107501503706`*^9, 3.674710754002777*^9}, {
+  3.674710850731494*^9, 3.674710851996648*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"subj\"\>", "\[Rule]", "\<\"precio\"\>"}], ",", 
+   RowBox[{"\<\"mult\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"\<\"count\"\>", "\[Rule]", "\<\"1\"\>"}], ",", 
+      RowBox[{"\<\"presentation\"\>", "\[Rule]", "\<\"default\"\>"}], ",", 
+      RowBox[{"\<\"object\"\>", "\[Rule]", "\<\"lavavajillas\"\>"}]}], 
+     "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.674710754579418*^9, {3.674710842942111*^9, 3.674710872619796*^9}, {
+   3.674710918776806*^9, 3.674710944142065*^9}, 3.674711065616968*^9, 
+   3.6747111008891125`*^9, 3.674711135124708*^9, 3.67471208907748*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"parserToJson", "[", "\"\<holi boli\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6747061026477623`*^9, 3.6747061054155717`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"failed\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.6747061060284986`*^9, 3.6747111622827115`*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "parserToJson", "]"}]], "Input",
+ CellChangeTimes->{{3.6746775930382013`*^9, 3.674677594466092*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CloudDeploy", "[", 
+  RowBox[{
+   RowBox[{"APIFunction", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<query\>\"", "\[Rule]", "\"\<String\>\""}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"parserToJson", "[", "#query", "]"}], "&"}], ",", 
+     "\"\<JSON\>\""}], "]"}], ",", 
+   InterpretationBox[
+    RowBox[{"CloudObject", "[", 
+     TagBox[
+      ButtonBox[
+       PaneSelectorBox[{
+        False->"\<\"https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-\
+4993-ae56-6d3117a9bd99/retbot/parser\"\>", True->
+        StyleBox["\<\"https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-\
+4993-ae56-6d3117a9bd99/retbot/parser\"\>", "HyperlinkActive"]}, Dynamic[
+         CurrentValue["MouseOver"]],
+        BaseStyle->{"Hyperlink"},
+        FrameMargins->0,
+        ImageSize->Automatic],
+       BaseStyle->"Hyperlink",
+       ButtonData->{
+         URL[
+         "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parser"], None},
+       ButtonNote->
+        "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parser"],
+      Annotation[#, 
+       "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parser", "Hyperlink"]& ], "]"}],
+    CloudObject[
+    "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parser"],
+    SelectWithContents->True], ",", 
+   RowBox[{"Permissions", "\[Rule]", "\"\<Public\>\""}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.674677036258601*^9, 3.6746771088336506`*^9}, {
+   3.6746771469208584`*^9, 3.674677149094305*^9}, {3.6746773612144604`*^9, 
+   3.674677367461275*^9}, {3.674677498815114*^9, 3.6746775009021444`*^9}, 
+   3.674677605833255*^9, {3.674677729627274*^9, 3.6746777319366717`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"CloudObject", "[", 
+   TagBox[
+    ButtonBox[
+     PaneSelectorBox[{
+      False->"\<\"https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-\
+4993-ae56-6d3117a9bd99/retbot/parser\"\>", True->
+      StyleBox["\<\"https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-\
+4993-ae56-6d3117a9bd99/retbot/parser\"\>", "HyperlinkActive"]}, Dynamic[
+       CurrentValue["MouseOver"]],
+      BaseStyle->{"Hyperlink"},
+      FrameMargins->0,
+      ImageSize->Automatic],
+     BaseStyle->"Hyperlink",
+     ButtonData->{
+       URL[
+       "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parser"], None},
+     ButtonNote->
+      "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parser"],
+    Annotation[#, 
+     "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parser", "Hyperlink"]& ], "]"}],
+  CloudObject[
+  "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parser"],
+  SelectWithContents->True]], "Output",
+ CellChangeTimes->{
+  3.6746771117159095`*^9, 3.67467715081178*^9, 3.6746774302801013`*^9, 
+   3.6746775030226192`*^9, 3.6746776115045853`*^9, 3.674677695464947*^9, 
+   3.6746777418138313`*^9, 3.6746779312443857`*^9, 3.6746779807837114`*^9, {
+   3.674678063125854*^9, 3.6746780912550044`*^9}, 3.674678133142147*^9, {
+   3.6746785052205286`*^9, 3.674678528444702*^9}, 3.6746785898788815`*^9, 
+   3.674680116330181*^9, {3.674680155137042*^9, 3.6746802299670525`*^9}, 
+   3.6746817569615974`*^9, 3.6746817917932873`*^9, 3.674681830148822*^9, 
+   3.674706127868063*^9, 3.67470971271865*^9, 3.6747098540659046`*^9, 
+   3.6747111683466997`*^9, 3.674712125828069*^9, 3.6747209657723722`*^9, 
+   3.674729266805353*^9, 3.674731048834362*^9}]
+}, Open  ]]
+},
+WindowSize->{1366, 725},
+WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+Magnification:>2. Inherited,
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (June 5, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 364, 8, 86, "Input"],
+Cell[947, 32, 727, 21, 126, "Output"]
+}, Open  ]],
+Cell[1689, 56, 177, 4, 61, "Input"],
+Cell[CellGroupData[{
+Cell[1891, 64, 700, 17, 165, "Input"],
+Cell[2594, 83, 381, 9, 86, "Output"]
+}, Open  ]],
+Cell[2990, 95, 8092, 173, 867, "Input"],
+Cell[CellGroupData[{
+Cell[11107, 272, 192, 4, 86, "Input"],
+Cell[11302, 278, 958, 21, 126, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12297, 304, 195, 4, 86, "Input"],
+Cell[12495, 310, 769, 17, 126, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13301, 332, 172, 3, 86, "Input"],
+Cell[13476, 337, 172, 3, 86, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13685, 345, 151, 2, 86, "Input"],
+Cell[13839, 349, 638, 15, 86, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14514, 369, 153, 2, 86, "Input"],
+Cell[14670, 373, 540, 13, 126, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15247, 391, 152, 2, 86, "Input"],
+Cell[15402, 395, 538, 13, 126, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15977, 413, 148, 2, 86, "Input"],
+Cell[16128, 417, 568, 13, 86, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16733, 435, 201, 3, 86, "Input"],
+Cell[16937, 440, 715, 15, 126, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17689, 460, 151, 2, 86, "Input"],
+Cell[17843, 464, 173, 3, 86, "Output"]
+}, Open  ]],
+Cell[18031, 470, 137, 2, 86, "Input"],
+Cell[CellGroupData[{
+Cell[18193, 476, 1811, 42, 199, "Input"],
+Cell[20007, 520, 1840, 39, 200, "Output"]
+}, Open  ]]
+}
+]
+*)
+

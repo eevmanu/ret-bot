@@ -1,0 +1,602 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     21038,        594]
+NotebookOptionsPosition[     19062,        519]
+NotebookOutlinePosition[     19433,        535]
+CellTagsIndexPosition[     19390,        532]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "\"\<Hace 3 dias\>\"", ",", "\"\<ayer\>\"", ",", 
+   "\"\<el miercoles pasado\>\"", ",", "\"\<08/06/2016\>\""}], "}"}]], "Input",
+ CellChangeTimes->{{3.6746841503157454`*^9, 3.674684232583581*^9}, {
+   3.6746842737113447`*^9, 3.674684287499691*^9}, 3.6746847063076773`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Hace 3 dias\"\>", ",", "\<\"ayer\"\>", 
+   ",", "\<\"el miercoles pasado\"\>", ",", "\<\"08/06/2016\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.674684706659773*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DateList", "[", "Yesterday", "]"}]], "Input",
+ CellChangeTimes->{{3.6746846093241515`*^9, 3.6746846157267747`*^9}, {
+  3.6746848990328875`*^9, 3.67468490190621*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2016", ",", "6", ",", "10", ",", "0", ",", "0", ",", "0.`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.67468461677852*^9, 3.674684902466957*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DateList", "[", 
+  RowBox[{"{", 
+   RowBox[{"\"\<08/06/2016\>\"", ",", 
+    RowBox[{"{", 
+     RowBox[{
+     "\"\<Day\>\"", ",", "\"\</\>\"", ",", "\"\<Month\>\"", ",", "\"\</\>\"", 
+      ",", "\"\<Year\>\""}], "}"}]}], "}"}], "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2016", ",", "6", ",", "8", ",", "0", ",", "0", ",", "0.`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.6746846463055887`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DateList", "[", 
+  RowBox[{"Today", "-", 
+   RowBox[{"Quantity", "[", 
+    RowBox[{"3", ",", "\"\<Days\>\""}], "]"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.674684691958064*^9, 3.6746847204420023`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2016", ",", "6", ",", "8", ",", "0", ",", "0", ",", "0.`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.6746846954648647`*^9, 3.6746847210672307`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"DateList", "[", 
+  RowBox[{"DayPlus", "[", 
+   RowBox[{"Today", ",", 
+    RowBox[{"-", "1"}], ",", "Wednesday"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6746848382113514`*^9, 3.674684889983056*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"2016", ",", "6", ",", "8", ",", "0", ",", "0", ",", "0.`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.674684873880312*^9, 3.6746848906884413`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{"Clear", "[", "getInfoFromClient", "]"}]], "Input",
+ CellChangeTimes->{{3.67468599699368*^9, 3.6746859988676414`*^9}, 
+   3.674724832960494*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"getInfoFromClient", "[", "query_", "]"}], ":=", 
+  RowBox[{"Module", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"resp", "=", "Null"}], ",", 
+      RowBox[{"replace", "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\"\<lunes\>\"", "\[Rule]", "Monday"}], ",", 
+         RowBox[{"\"\<martes\>\"", "\[Rule]", "Tuesday"}], ",", 
+         RowBox[{"\"\<miercoles\>\"", "\[Rule]", "Wednesday"}], ",", 
+         RowBox[{"\"\<jueves\>\"", "\[Rule]", "Thursday"}], ",", 
+         RowBox[{"\"\<viernes\>\"", "\[Rule]", "Friday"}], ",", 
+         RowBox[{"\"\<sabado\>\"", "\[Rule]", "Saturday"}], ",", 
+         RowBox[{"\"\<domingo\>\"", "\[Rule]", "Sunday"}]}], "}"}]}]}], "}"}],
+     ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"query", ",", "\"\<ayer\>\""}], "]"}], ",", 
+       RowBox[{"resp", "=", 
+        RowBox[{
+         RowBox[{"DateList", "[", "Yesterday", "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"1", ";;", "3"}], "]"}], "]"}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"query", ",", 
+         RowBox[{"DatePattern", "[", 
+          RowBox[{"{", 
+           RowBox[{"\"\<Day\>\"", ",", "\"\<Month\>\"", ",", "\"\<Year\>\""}],
+            "}"}], "]"}]}], "]"}], ",", 
+       RowBox[{"resp", "=", 
+        RowBox[{
+         RowBox[{"DateList", "[", 
+          RowBox[{"{", 
+           RowBox[{"query", ",", 
+            RowBox[{"{", 
+             RowBox[{
+             "\"\<Day\>\"", ",", "\"\</\>\"", ",", "\"\<Month\>\"", ",", 
+              "\"\</\>\"", ",", "\"\<Year\>\""}], "}"}]}], "}"}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"1", ";;", "3"}], "]"}], "]"}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"query", ",", 
+         RowBox[{
+         "___", "~~", "\"\<hace\>\"", " ", "~~", "x__", "~~", "\"\<dias\>\"", 
+          "~~", "___"}]}], "]"}], ",", 
+       RowBox[{"resp", "=", 
+        RowBox[{
+         RowBox[{"StringCases", "[", 
+          RowBox[{"query", ",", 
+           RowBox[{
+            RowBox[{
+            "___", "~~", "\"\<hace\>\"", " ", "~~", "x__", "~~", 
+             "\"\<dias\>\"", "~~", "___"}], "\[RuleDelayed]", 
+            RowBox[{"DateList", "[", 
+             RowBox[{"Today", "-", 
+              RowBox[{"Quantity", "[", 
+               RowBox[{
+                RowBox[{"FromDigits", "[", 
+                 RowBox[{"StringTrim", "[", "x", "]"}], "]"}], ",", 
+                "\"\<Days\>\""}], "]"}]}], "]"}]}]}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"1", ",", 
+           RowBox[{"1", ";;", "3"}]}], "]"}], "]"}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"query", ",", 
+         RowBox[{
+         "___", "~~", "\"\<el\>\"", " ", "~~", "x__", "~~", "\"\<pasado\>\"", 
+          "~~", "___"}]}], "]"}], ",", 
+       RowBox[{"resp", "=", 
+        RowBox[{
+         RowBox[{"StringCases", "[", 
+          RowBox[{"query", ",", 
+           RowBox[{
+            RowBox[{
+            "___", "~~", "\"\<el\>\"", " ", "~~", "x__", "~~", 
+             "\"\<pasado\>\"", "~~", "___"}], "\[RuleDelayed]", 
+            RowBox[{"DateList", "[", 
+             RowBox[{"DayPlus", "[", 
+              RowBox[{"Today", ",", 
+               RowBox[{"-", "1"}], ",", 
+               RowBox[{
+                RowBox[{"StringTrim", "[", "x", "]"}], "/.", "replace"}]}], 
+              "]"}], "]"}]}]}], "]"}], "[", 
+         RowBox[{"[", 
+          RowBox[{"1", ",", 
+           RowBox[{"1", ";;", "3"}]}], "]"}], "]"}]}]}], "]"}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"query", ",", 
+         RowBox[{
+         "___", "~~", "NumberString", "~~", "___", "~~", "\"\<soles\>\""}]}], 
+        "]"}], ",", 
+       RowBox[{"resp", "=", 
+        RowBox[{"StringCases", "[", 
+         RowBox[{"query", ",", 
+          RowBox[{
+           RowBox[{"x", ":", "NumberString"}], "\[RuleDelayed]", 
+           RowBox[{"SetPrecision", "[", 
+            RowBox[{
+             RowBox[{"ToExpression", "[", "x", "]"}], ",", "4"}], "]"}]}]}], 
+         "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"query", ",", 
+         RowBox[{"\"\<S/.\>\"", "~~", "NumberString", "~~", "___"}]}], "]"}], 
+       ",", 
+       RowBox[{"resp", "=", 
+        RowBox[{"StringCases", "[", 
+         RowBox[{"query", ",", 
+          RowBox[{
+           RowBox[{"\"\<S/.\>\"", "~~", 
+            RowBox[{"x", ":", "NumberString"}], "~~", "___"}], 
+           "\[RuleDelayed]", 
+           RowBox[{"SetPrecision", "[", 
+            RowBox[{
+             RowBox[{"ToExpression", "[", "x", "]"}], ",", "4"}], "]"}]}]}], 
+         "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"query", ",", "NumberString"}], "]"}], ",", 
+       RowBox[{"resp", "=", 
+        RowBox[{"StringCases", "[", 
+         RowBox[{"query", ",", 
+          RowBox[{
+           RowBox[{"x", ":", "NumberString"}], "\[RuleDelayed]", 
+           RowBox[{"SetPrecision", "[", 
+            RowBox[{
+             RowBox[{"ToExpression", "[", "x", "]"}], ",", "4"}], "]"}]}]}], 
+         "]"}]}]}], "]"}], ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"StringMatchQ", "[", 
+        RowBox[{"query", ",", 
+         RowBox[{
+         "StartOfString", "~~", "___", "~~", "\"\<-\>\"", "~~", "__", "~~", 
+          "EndOfString"}]}], "]"}], ",", 
+       RowBox[{"resp", "=", 
+        RowBox[{"StringCases", "[", 
+         RowBox[{"query", ",", 
+          RowBox[{
+           RowBox[{
+           "StartOfString", "~~", "y__", "~~", "\"\<-\>\"", "~~", "x__", "~~",
+             "EndOfString"}], "\[RuleDelayed]", 
+           RowBox[{"y", "<>", "\"\<-\>\"", "<>", "x"}]}]}], "]"}]}]}], "]"}], 
+     ";", "\[IndentingNewLine]", 
+     RowBox[{"If", "[", 
+      RowBox[{
+       RowBox[{"MatchQ", "[", 
+        RowBox[{"resp", ",", "Null"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"\"\<status\>\"", "\[Rule]", "\"\<failed\>\""}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"\"\<response\>\"", "->", "resp"}], ",", 
+         RowBox[{"\"\<status\>\"", "\[Rule]", "\"\<ok\>\""}]}], "}"}]}], 
+      "]"}]}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.674684927461325*^9, 3.6746849922479672`*^9}, {
+   3.6746850282720175`*^9, 3.6746852214333334`*^9}, {3.6746852872034817`*^9, 
+   3.6746852883235145`*^9}, {3.674685353019292*^9, 3.674685423812688*^9}, {
+   3.6746855414445305`*^9, 3.6746855853124948`*^9}, {3.6746856847444034`*^9, 
+   3.67468571420891*^9}, {3.6746858905092907`*^9, 3.6746860119197645`*^9}, {
+   3.67468604242578*^9, 3.674686069001561*^9}, {3.6746861327971287`*^9, 
+   3.674686136007847*^9}, {3.674686166757681*^9, 3.6746862143161697`*^9}, {
+   3.6746864026824484`*^9, 3.674686406158358*^9}, {3.6746864380063004`*^9, 
+   3.674686500395475*^9}, {3.674686539066413*^9, 3.674686679091296*^9}, {
+   3.674686746085385*^9, 3.674686788450898*^9}, {3.674687004710631*^9, 
+   3.674687158392044*^9}, {3.6746872142613945`*^9, 3.674687217000353*^9}, {
+   3.674687280013588*^9, 3.6746873587907767`*^9}, {3.6746874864619427`*^9, 
+   3.674687493606584*^9}, {3.674696888376337*^9, 3.674696896180649*^9}, {
+   3.674697105466158*^9, 3.6746971364276075`*^9}, {3.674697206955654*^9, 
+   3.674697310438671*^9}, {3.6746976846670804`*^9, 3.6746977162794476`*^9}, {
+   3.674697847562272*^9, 3.674697880999607*^9}, {3.6746982926738834`*^9, 
+   3.6746983379147196`*^9}, {3.6747243550120716`*^9, 3.674724363504551*^9}, {
+   3.674724697521508*^9, 3.674724742653157*^9}, {3.6747293107931423`*^9, 
+   3.674729324362646*^9}, {3.674729456732601*^9, 3.6747294579341764`*^9}, {
+   3.674729505719984*^9, 3.6747295721684895`*^9}, {3.674730018673402*^9, 
+   3.674730056239195*^9}, 3.6747301080731564`*^9, {3.674730181700206*^9, 
+   3.674730190083685*^9}, {3.6747302347279644`*^9, 3.674730241049221*^9}, {
+   3.6747305733885937`*^9, 3.674730575142642*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<ayer\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.674685129315689*^9, 3.674685159426607*^9}, 
+   3.674687015691143*^9, 3.674687131140519*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"response\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"2016", ",", "6", ",", "11"}], "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6746860526542573`*^9, 3.6746860725561595`*^9}, 
+   3.6746861402126966`*^9, 3.6746862255777354`*^9, 3.6746872197767506`*^9, 
+   3.6746978999630833`*^9, 3.67472946280866*^9, 3.674729514659587*^9, {
+   3.6747295614600687`*^9, 3.6747295766887846`*^9}, 3.6747315085805197`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<hace 3 dias\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.674685170390023*^9, 3.674685171893256*^9}, {
+   3.674685971876446*^9, 3.6746859765877714`*^9}, 3.674687017578395*^9, 
+   3.6746871329377995`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"response\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"2016", ",", "6", ",", "9"}], "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.6746862282829127`*^9, 3.6746864100825443`*^9, 
+  3.6746872207199955`*^9, 3.674696918299672*^9, 3.6746979022990875`*^9, 
+  3.674729580075571*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<el miercoles pasado\>\"", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6746866943126698`*^9, 3.6746866965095625`*^9}, 
+   3.6746870196723814`*^9, 3.6746871351835976`*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"response\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"2016", ",", "6", ",", "8"}], "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.67468669757584*^9, {3.67468675388325*^9, 3.674686793225401*^9}, 
+   3.6746872215887136`*^9, 3.6746969153285975`*^9, 3.674697904705432*^9, 
+   3.674729583079975*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<08/06/2016\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6746868320025806`*^9, 3.67468683833586*^9}, {
+   3.6746868944559183`*^9, 3.67468689642141*^9}, 3.674687021997672*^9, 
+   3.67468713698168*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"response\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"2016", ",", "6", ",", "8"}], "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6746868389672623`*^9, 3.674686896854374*^9, {3.6746871383660736`*^9, 
+   3.6746871474665165`*^9}, 3.67468722243223*^9, 3.674696912849834*^9, 
+   3.674697906619455*^9, 3.6747295861827974`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<S/. 28 soles\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6746872339758167`*^9, 3.674687235658185*^9}, {
+  3.6746872922509327`*^9, 3.6746872957490616`*^9}, {3.6747243826210365`*^9, 
+  3.6747243827770257`*^9}, {3.6747247759169817`*^9, 3.6747247883481207`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"response\"\>", "\[Rule]", 
+    RowBox[{"{", "28.`4.", "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{
+  3.6746872360715475`*^9, {3.6746872855615215`*^9, 3.674687296367503*^9}, 
+   3.6746873652833242`*^9, 3.6746874986587152`*^9, 3.674696903295973*^9, 
+   3.674697908597187*^9, 3.674724383321725*^9, {3.6747247784938693`*^9, 
+   3.6747247890037775`*^9}, 3.6747295885325184`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<exactamente 45.6 soles\>\"", 
+  "]"}]], "Input"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"response\"\>", "\[Rule]", 
+    RowBox[{"{", "45.6000000000000014211`4.", "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.674724368799059*^9, 3.674729591319764*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<45.6\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.6747292959004617`*^9, 3.6747292977649455`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"response\"\>", "\[Rule]", 
+    RowBox[{"{", "45.6000000000000014211`4.", "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.6747292987039747`*^9, 3.6747295969898214`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<BA50-03376938\>\"", "]"}]], "Input",
+ CellChangeTimes->{3.674730002389956*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\<\"response\"\>", "\[Rule]", 
+    RowBox[{"{", "\<\"BA50-03376938\"\>", "}"}]}], ",", 
+   RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"ok\"\>"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.6747300028906784`*^9, 3.674730117614972*^9, 
+  3.6747302095663223`*^9, 3.6747302531092286`*^9, 3.674730586222525*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"getInfoFromClient", "[", "\"\<basurasdfsdf\>\"", "]"}]], "Input",
+ CellChangeTimes->{{3.674698281187994*^9, 3.674698283399683*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"status\"\>", "\[Rule]", "\<\"failed\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{{3.674698283920933*^9, 3.6746983275060873`*^9}, 
+   3.6746985179776783`*^9, 3.674729602878072*^9, 3.6747306109246073`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CloudDeploy", "[", 
+  RowBox[{
+   RowBox[{"APIFunction", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\"\<query\>\"", "\[Rule]", "\"\<String\>\""}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"getInfoFromClient", "[", "#query", "]"}], "&"}], ",", 
+     "\"\<JSON\>\""}], "]"}], ",", 
+   RowBox[{"CloudObject", "[", "\"\<retbot/parserinfo\>\"", "]"}], ",", 
+   RowBox[{"Permissions", "\[Rule]", "\"\<Public\>\""}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.674697968629017*^9, 3.6746981007134666`*^9}, {
+  3.6746981540704145`*^9, 3.6746981617610908`*^9}}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"CloudObject", "[", 
+   TagBox[
+    ButtonBox[
+     PaneSelectorBox[{
+      False->"\<\"https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-\
+4993-ae56-6d3117a9bd99/retbot/parserinfo\"\>", True->
+      StyleBox["\<\"https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-\
+4993-ae56-6d3117a9bd99/retbot/parserinfo\"\>", "HyperlinkActive"]}, Dynamic[
+       CurrentValue["MouseOver"]],
+      BaseStyle->{"Hyperlink"},
+      FrameMargins->0,
+      ImageSize->Automatic],
+     BaseStyle->"Hyperlink",
+     ButtonData->{
+       URL[
+       "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parserinfo"], None},
+     ButtonNote->
+      "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parserinfo"],
+    Annotation[#, 
+     "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parserinfo", "Hyperlink"]& ], "]"}],
+  CloudObject[
+  "https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-4993-ae56-\
+6d3117a9bd99/retbot/parserinfo"],
+  SelectWithContents->True]], "Output",
+ CellChangeTimes->{3.6746981082052193`*^9, 3.674698163346689*^9, 
+  3.6746983458720503`*^9, 3.6747248443909483`*^9, 3.674729607284475*^9, 
+  3.6747306100457354`*^9}]
+}, Open  ]]
+},
+WindowSize->{1350, 709},
+WindowMargins->{{-7, Automatic}, {Automatic, 0}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (June 5, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 315, 6, 45, "Input"],
+Cell[898, 30, 214, 5, 45, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1149, 40, 189, 3, 45, "Input"],
+Cell[1341, 45, 185, 4, 45, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1563, 54, 268, 7, 45, "Input"],
+Cell[1834, 63, 165, 4, 45, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2036, 72, 228, 5, 45, "Input"],
+Cell[2267, 79, 191, 4, 45, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2495, 88, 229, 5, 45, "Input"],
+Cell[2727, 95, 189, 4, 45, "Output"]
+}, Open  ]],
+Cell[2931, 102, 167, 3, 45, "Input"],
+Cell[3101, 107, 8431, 197, 742, "Input"],
+Cell[CellGroupData[{
+Cell[11557, 308, 195, 3, 45, "Input"],
+Cell[11755, 313, 530, 10, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12322, 328, 256, 4, 45, "Input"],
+Cell[12581, 334, 400, 9, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13018, 348, 221, 4, 45, "Input"],
+Cell[13242, 354, 423, 10, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13702, 369, 252, 4, 45, "Input"],
+Cell[13957, 375, 450, 10, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14444, 390, 313, 4, 45, "Input"],
+Cell[14760, 396, 495, 10, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15292, 411, 102, 2, 45, "Input"],
+Cell[15397, 415, 283, 6, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[15717, 426, 151, 2, 45, "Input"],
+Cell[15871, 430, 287, 6, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16195, 441, 132, 2, 45, "Input"],
+Cell[16330, 445, 354, 7, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16721, 457, 155, 2, 45, "Input"],
+Cell[16879, 461, 247, 4, 64, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[17163, 470, 583, 13, 75, "Input"],
+Cell[17749, 485, 1297, 31, 106, "Output"]
+}, Open  ]]
+}
+]
+*)
+

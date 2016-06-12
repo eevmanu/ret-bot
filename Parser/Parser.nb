@@ -1,0 +1,3876 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    154966,       3868]
+NotebookOptionsPosition[    153742,       3823]
+NotebookOutlinePosition[    154112,       3839]
+CellTagsIndexPosition[    154069,       3836]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData["Quit"], "Input",
+ CellChangeTimes->{{3.6741761181351786`*^9, 3.6741761185727334`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "Get", "[", 
+   "\"\<C:\\\\Users\\\\COMPUTER\\\\ErasmoWorkspaces\\\\botfb\\\\\
+FunctionalParsers.m\>\"", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.674171668089123*^9, 3.674171669968933*^9}, {
+  3.674171724297858*^9, 3.6741717522007475`*^9}, {3.6743102200196643`*^9, 
+  3.6743102215847673`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "ebnfCode", "=", 
+   "\"\<\n<parserProducts> = <adverb> , <verb> , [ <subject> ] , \
+<object-spec> <@ ParserProducts[Flatten[#]]& ;\n<verb> = ( 'cuesta' | 'queda' \
+| 'es' ) <@ Verb ;\n<object-spec> = ( <object-list> | <object> | <objects> | \
+<objects-mult> ) <@ ProductsObjects[Flatten[{#}]]& ;\n<adverb> = 'cuanto' | \
+'cual' | 'donde' <@ Adverb ;\n<subject> = [ 'el' ] , 'precio' <@ Subj ;\n\
+<object> = [ 'kg' ] , 'de' , 'arroz' | 'leche' | 'azucar' | 'shampoo' ;\n\
+<objects> = 'fideos' | 'fresas' | [ 'kg' ] , 'de' , 'mandarinas' ;\n\
+<objects-mult> = 'Range[1,100]' , <objects> <@ Mult ;\n<object-list> = ( \
+<object> | <objects> | <objects-mult> ) , { 'y' \[RightTriangle] ( <object> | \
+<objects> | <objects-mult> ) } ;\>\""}], ";"}]], "Input",
+ CellChangeTimes->{{3.674177831636919*^9, 3.674177913105234*^9}, {
+   3.6741780302220173`*^9, 3.6741783016714478`*^9}, {3.674178346975552*^9, 
+   3.674178409201313*^9}, {3.6741785978590145`*^9, 3.674178627766301*^9}, {
+   3.674178664311624*^9, 3.674178756383259*^9}, {3.6741788483015614`*^9, 
+   3.6741789202353845`*^9}, {3.6741790147270317`*^9, 3.6741790547190094`*^9}, 
+   3.6741791604433985`*^9, {3.674179234908762*^9, 3.674179235033732*^9}, {
+   3.674179266511857*^9, 3.6741792740549145`*^9}, {3.674179327857833*^9, 
+   3.6741793450120316`*^9}, {3.6741794201429405`*^9, 
+   3.6741794278529377`*^9}, {3.674336603344825*^9, 3.674336629717704*^9}, {
+   3.6743367092026443`*^9, 3.6743368085003653`*^9}, {3.6743368801414833`*^9, 
+   3.674336883250904*^9}, {3.6743369667671537`*^9, 3.674336985954861*^9}, {
+   3.6743370179395*^9, 3.67433701822068*^9}, {3.674649109215784*^9, 
+   3.674649132570907*^9}, {3.674649293650423*^9, 3.6746493239768686`*^9}, {
+   3.6746493623726315`*^9, 3.674649404103345*^9}, {3.6746494418274994`*^9, 
+   3.6746494458521967`*^9}, {3.674649566032192*^9, 3.674649610105605*^9}, {
+   3.674652417671273*^9, 3.6746524183094945`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "ebnfCode", "=", 
+   "\"\<\n<parserProducts> =  [ <adverb> ] , [ <verb> ] , [ <subject> ] , \
+<object-spec> <@ ParserProducts[Flatten[#]]& ;\n<verb> = ( 'cuesta' | 'queda' \
+| 'es' | 'esta' ) <@ Verb ;\n<object-spec> = ( <object-list> | <object> | \
+<objects> | <objects-mult> ) <@ ProductsObjects[Flatten[{#}]]& ;\n\
+<presentation> = 'kilos' | 'kilo' | 'tarro' | 'kg' | 'botella' | 'botellas' | \
+'envase' | 'envases' | 'l' | 'litros' | 'paquete' | 'paquetes' <@ \
+Presentation ;\n<adverb> = [ 'a' ] , 'como' | 'cuanto' | 'cual' | 'donde' <@ \
+Adverb ;\n<subject> = [ 'el' ] \[RightTriangle] 'precio' \[LeftTriangle] 'de' \
+<@ Subj ;\n<object> =  'arroz' | 'pollo' | 'chancho' | 'papel' , 'higienico' \
+| 'aceite' | 'pan' | 'leche' | 'azucar' , [ 'rubia' ] | 'shampoo' | ( \
+'aceite' , 'de' , 'oliva' ) ;\n<objects> = 'fideos' | 'tampones' | \
+'lavavajillas' | 'condones' | 'panes' | 'fresas' | 'mandarinas' ;\n\
+<objects-mult> = [ 'Range[1,100]' ] , [ <presentation> ] ,  [ 'de' ] \
+\[RightTriangle] [ 'del' ] \[RightTriangle] [ 'la' ] \[RightTriangle] [ 'los' \
+] \[RightTriangle] [ 'las' ]  \[RightTriangle] ( <object> | <objects> ) <@ \
+Mult ;\n<object-list> = ( <object> | <objects> | <objects-mult> ) , { 'y' \
+\[RightTriangle] ( <object> | <objects> | <objects-mult> ) } ;\>\""}], 
+  ";"}]], "Input",
+ CellChangeTimes->{{3.674649685083103*^9, 3.6746496965263824`*^9}, {
+   3.674649920683693*^9, 3.6746499792697134`*^9}, {3.674650110628166*^9, 
+   3.6746502519746113`*^9}, {3.674651345976491*^9, 3.674651349232754*^9}, {
+   3.6746514786817484`*^9, 3.67465150439991*^9}, {3.674651686396567*^9, 
+   3.674651688541418*^9}, {3.6746517392911777`*^9, 3.6746517726040783`*^9}, 
+   3.6746518521716614`*^9, {3.6746519083367357`*^9, 3.6746519204143543`*^9}, {
+   3.6746521149577665`*^9, 3.674652119194242*^9}, {3.6746522047131324`*^9, 
+   3.674652209083995*^9}, {3.6746523151471024`*^9, 3.6746523291855154`*^9}, {
+   3.674652444886982*^9, 3.6746524521762433`*^9}, {3.6746525393644843`*^9, 
+   3.674652561172804*^9}, {3.6746526081292696`*^9, 3.6746526388445644`*^9}, {
+   3.674652713003709*^9, 3.6746527162694683`*^9}, {3.6746528199706306`*^9, 
+   3.674652829377577*^9}, {3.674654094743837*^9, 3.674654117057474*^9}, {
+   3.6746541497148457`*^9, 3.6746541565426664`*^9}, {3.674654298095997*^9, 
+   3.6746543054176435`*^9}, {3.674669040492152*^9, 3.6746690485973854`*^9}, {
+   3.6746705823995657`*^9, 3.6746706267754908`*^9}, {3.674670710095208*^9, 
+   3.6746707697097993`*^9}, {3.6746708878353014`*^9, 3.6746708918653207`*^9}, 
+   3.674670967377325*^9, {3.674671059645405*^9, 3.674671084911318*^9}, {
+   3.6746711448092504`*^9, 3.67467115861933*^9}, {3.674671199323969*^9, 
+   3.6746712056448007`*^9}, 3.6746712635291476`*^9, {3.6746712937086926`*^9, 
+   3.674671313941037*^9}, {3.6746795712916594`*^9, 3.6746795885076475`*^9}, 
+   3.6746796279494133`*^9, {3.674704734252138*^9, 3.674704780132448*^9}, 
+   3.674704824978141*^9, {3.6747048962454944`*^9, 3.6747049062188997`*^9}, {
+   3.674705019953331*^9, 3.674705031456295*^9}, {3.67470506394044*^9, 
+   3.6747050737278748`*^9}, {3.6747051464242487`*^9, 3.674705149687916*^9}, {
+   3.674705232860523*^9, 3.6747052349113827`*^9}, {3.674705473685341*^9, 
+   3.6747054988127823`*^9}, 3.674705551060667*^9, {3.674705629898858*^9, 
+   3.674705658746961*^9}, {3.674709308365418*^9, 3.6747093154414306`*^9}, {
+   3.6747093575470324`*^9, 3.674709363278102*^9}, {3.6747095627895813`*^9, 
+   3.6747095729236574`*^9}, {3.6747098021001463`*^9, 
+   3.6747098046297264`*^9}, {3.674709881809886*^9, 3.674709913878952*^9}, {
+   3.6747099486757154`*^9, 3.6747099903994064`*^9}, {3.674710098198308*^9, 
+   3.6747101373771367`*^9}, {3.674710204425094*^9, 3.674710205719537*^9}, {
+   3.6747208028766923`*^9, 3.674720822009604*^9}, {3.6747277601001844`*^9, 
+   3.674727765518744*^9}, {3.674727947017267*^9, 3.6747279778216553`*^9}, {
+   3.6747280376403646`*^9, 3.674728103864125*^9}, 3.6747281758835716`*^9, {
+   3.674728230514745*^9, 3.674728232799576*^9}, {3.674728330991707*^9, 
+   3.674728466352236*^9}, {3.6747285064564567`*^9, 3.6747285102720547`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"GenerateParsersFromEBNF", "[", 
+  RowBox[{"ToTokens", "[", "ebnfCode", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6741746847695045`*^9, 3.674174761754592*^9}, 
+   3.674176523135132*^9, 3.6741766988184443`*^9, {3.674179297187933*^9, 
+   3.674179315885264*^9}, 3.6746523574891367`*^9, 3.6746524582328715`*^9, {
+   3.6746526314253483`*^9, 3.6746526445811415`*^9}, 3.6746527196097865`*^9, 
+   3.674654162447672*^9, 3.6746543277001452`*^9, 3.674670601015106*^9, 
+   3.674670775770075*^9, 3.674704829046923*^9, 3.674705528205366*^9}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", "}"}], ",", 
+      RowBox[{"EBNF", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         TemplateBox[{
+          "\"pPARSERPRODUCTS\"","\" = \"",
+           RowBox[{"ParseSequentialComposition", "[", 
+             RowBox[{
+               RowBox[{
+                 RowBox[{"Block", "[", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{"pADVERB", "[", "#1", "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+               ",", 
+               RowBox[{"ParseSequentialComposition", "[", 
+                 RowBox[{
+                   RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{"pVERB", "[", "#1", "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                   ",", 
+                   RowBox[{"ParseSequentialComposition", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{"pSUBJECT", "[", "#1", "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                    ",", "pOBJECTSPEC"}], "]"}]}], "]"}]}], "]"}],"\"<@\"",
+           "\"ParserProducts[Flatten[#]]&\""},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pVERB\"","\" = \"",RowBox[{"ParseAlternativeComposition", "[", 
+             RowBox[{
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"cuesta\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"cuesta\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"queda\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"queda\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"es\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"es\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"esta\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"esta\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}]}], "]"}],"\"<@\"",
+           "\"Verb\""},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pOBJECTSPEC\"","\" = \"",
+           RowBox[{"ParseAlternativeComposition", "[", 
+             
+             RowBox[{"pOBJECTLIST", ",", "pOBJECT", ",", "pOBJECTS", ",", 
+               "pOBJECTSMULT"}], "]"}],"\"<@\"",
+           "\"ProductsObjects[Flatten[{#}]]&\""},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pPRESENTATION\"","\" = \"",
+           RowBox[{"ParseAlternativeComposition", "[", 
+             RowBox[{
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"kilos\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"kilos\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"kilo\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"kilo\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"tarro\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"tarro\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"kg\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"kg\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"botella\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"botella\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"botellas\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"botellas\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"envase\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"envase\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"envases\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"envases\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"l\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"l\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"litros\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"litros\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"paquete\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"paquete\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"paquetes\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"paquetes\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}]}], "]"}],"\"<@\"",
+           "\"Presentation\""},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pADVERB\"","\" = \"",RowBox[{"ParseAlternativeComposition", "[", 
+             RowBox[{
+               RowBox[{"ParseSequentialComposition", "[", 
+                 RowBox[{
+                   RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"a\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"a\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ")"}], "[", "#1", 
+                    "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                   ",", 
+                   RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"como\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"como\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}]}], "]"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"cuanto\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"cuanto\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"cual\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"cual\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"donde\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"donde\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}]}], "]"}],"\"<@\"",
+           "\"Adverb\""},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pSUBJECT\"","\" = \"",
+           RowBox[{"ParseSequentialCompositionPickRight", "[", 
+             RowBox[{
+               RowBox[{
+                 RowBox[{"Block", "[", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"el\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"el\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ")"}], "[", "#1", 
+                    "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+               ",", 
+               RowBox[{"ParseSequentialCompositionPickLeft", "[", 
+                 RowBox[{
+                   RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"precio\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"precio\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+                   RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"de\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"de\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}]}], "]"}]}], "]"}],
+           "\"<@\"","\"Subj\""},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pOBJECT\"","\" = \"",RowBox[{"ParseAlternativeComposition", "[", 
+             RowBox[{
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"arroz\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"arroz\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"pollo\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"pollo\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"chancho\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"chancho\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{"ParseSequentialComposition", "[", 
+                 RowBox[{
+                   RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"papel\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"papel\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+                   RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"higienico\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"higienico\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}]}], "]"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"aceite\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"aceite\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"pan\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"pan\""}], "}"}],
+                     "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"leche\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"leche\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{"ParseSequentialComposition", "[", 
+                 RowBox[{
+                   RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"azucar\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"azucar\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+                   RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"rubia\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"rubia\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ")"}], "[", "#1", 
+                    "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], 
+                    "&"}]}], "]"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"shampoo\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"shampoo\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{"ParseSequentialComposition", "[", 
+                 RowBox[{
+                   RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"aceite\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"aceite\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+                   RowBox[{"ParseSequentialComposition", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"de\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"de\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"oliva\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"oliva\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}]}], "]"}]}], "]"}]}], 
+             "]"}]},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pOBJECTS\"","\" = \"",RowBox[{"ParseAlternativeComposition", "[", 
+             RowBox[{
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"fideos\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"fideos\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"tampones\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"tampones\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"lavavajillas\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", 
+                    "\"lavavajillas\""}], "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"condones\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"condones\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"panes\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"panes\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"fresas\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"fresas\""}], 
+                    "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+               RowBox[{
+                 RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"mandarinas\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"mandarinas\""}],
+                     "}"}], "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}]}], "]"}]},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pOBJECTSMULT\"","\" = \"",
+           RowBox[{"ParseSequentialComposition", "[", 
+             RowBox[{
+               RowBox[{
+                 RowBox[{"Block", "[", 
+                   RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"ParseApply", "[", 
+                    RowBox[{"ToExpression", ",", 
+                    RowBox[{"ParsePredicate", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"StringMatchQ", "[", 
+                    RowBox[{"#1", ",", "NumberString"}], "]"}], "&&", 
+                    RowBox[{"1", "\[LessEqual]", 
+                    RowBox[{"ToExpression", "[", "#1", "]"}], "\[LessEqual]", 
+                    "100"}]}], "&"}], "]"}]}], "]"}], "[", "#1", "]"}]}], 
+                    "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+               ",", 
+               RowBox[{"ParseSequentialComposition", "[", 
+                 RowBox[{
+                   RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{"pPRESENTATION", "[", "#1", "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                   ",", 
+                   RowBox[{"ParseSequentialCompositionPickRight", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"de\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"de\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ")"}], "[", "#1", 
+                    "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                    ",", 
+                    RowBox[{"ParseSequentialCompositionPickRight", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"del\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"del\""}], "}"}],
+                     "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ")"}], "[", "#1", 
+                    "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                    ",", 
+                    RowBox[{"ParseSequentialCompositionPickRight", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"la\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"la\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ")"}], "[", "#1", 
+                    "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                    ",", 
+                    RowBox[{"ParseSequentialCompositionPickRight", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"los\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"los\""}], "}"}],
+                     "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ")"}], "[", "#1", 
+                    "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                    ",", 
+                    RowBox[{"ParseSequentialCompositionPickRight", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Block", "[", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"FunctionalParsers`Private`res", "=", 
+                    RowBox[{
+                    RowBox[{"(", 
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"las\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"las\""}], "}"}],
+                     "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ")"}], "[", "#1", 
+                    "]"}]}], "}"}], ",", 
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{"TrueQ", "[", 
+                    RowBox[{"FunctionalParsers`Private`res", "===", 
+                    RowBox[{"{", "}"}]}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"#1", ",", 
+                    RowBox[{"{", "}"}]}], "}"}], "}"}], ",", 
+                    "FunctionalParsers`Private`res"}], "]"}]}], "]"}], "&"}], 
+                    ",", 
+                    RowBox[{"ParseAlternativeComposition", "[", 
+                    RowBox[{"pOBJECT", ",", "pOBJECTS"}], "]"}]}], "]"}]}], 
+                    "]"}]}], "]"}]}], "]"}]}], "]"}]}], "]"}]}], "]"}],
+           "\"<@\"","\"Mult\""},
+          "RowDefault"], ",", 
+         TemplateBox[{
+          "\"pOBJECTLIST\"","\" = \"",
+           RowBox[{"ParseSequentialComposition", "[", 
+             RowBox[{
+               RowBox[{"ParseAlternativeComposition", "[", 
+                 RowBox[{"pOBJECT", ",", "pOBJECTS", ",", "pOBJECTSMULT"}], 
+                 "]"}], ",", 
+               RowBox[{"ParseMany1", "[", 
+                 RowBox[{"ParseSequentialCompositionPickRight", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"If", "[", 
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{
+                    RowBox[{"Length", "[", "#1", "]"}], ">", "0"}], "&&", 
+                    RowBox[{"\"y\"", "===", 
+                    RowBox[{"First", "[", "#1", "]"}]}]}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Rest", "[", "#1", "]"}], ",", "\"y\""}], "}"}], 
+                    "}"}], ",", 
+                    RowBox[{"{", "}"}]}], "]"}], "&"}], ",", 
+                    RowBox[{"ParseAlternativeComposition", "[", 
+                    RowBox[{"pOBJECT", ",", "pOBJECTS", ",", "pOBJECTSMULT"}],
+                     "]"}]}], "]"}], "]"}]}], "]"}]},
+          "RowDefault"]}], "}"}], "]"}]}], "}"}], "}"}], ",", 
+   RowBox[{"{", "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{{3.6747055289243736`*^9, 3.6747055561186852`*^9}, {
+   3.6747056377758455`*^9, 3.674705663423207*^9}, 3.674709208620101*^9, 
+   3.674709319620592*^9, 3.6747093715920076`*^9, 3.6747095839300747`*^9, 
+   3.6747096927064714`*^9, 3.6747098119964333`*^9, 3.674710212250462*^9, 
+   3.6747119207832694`*^9, 3.6747208964750004`*^9, 3.6747277735796084`*^9, 
+   3.6747281148459444`*^9, 3.674728180341905*^9, 3.6747282363860774`*^9, {
+   3.6747283818449807`*^9, 3.67472843400861*^9}, 3.6747284755285378`*^9, 
+   3.674728520469061*^9}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"sentences", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<del arroz\>\"", ",", "\"\<cuanto cuesta 1 tarro de leche\>\"", ",", 
+    "\"\<cual es el precio de 1 kg de mandarinas\>\"", ",", 
+    "\"\<cual es el precio de 2 botellas de aceite de oliva\>\"", ",", 
+    "\"\<cuanto cuesta 1 l de leche y 5 kg de azucar rubia\>\"", ",", " ", 
+    "\"\<cuanto cuesta 3 kg de azucar rubia\>\"", ",", 
+    "\"\<a como esta kilo de fideos\>\"", ",", "\"\<3 envases de shampoo\>\"",
+     ",", "\"\<cuanto esta 1 l de leche\>\"", ",", "\"\<5 kg de arroz\>\"", 
+    ",", "\"\<lavavajillas\>\"", ",", "\"\<8 kilos de pollo\>\""}], 
+   "}"}]}]], "Input",
+ CellChangeTimes->{{3.674172849927477*^9, 3.674172875678037*^9}, {
+   3.6741748845272493`*^9, 3.674174885468911*^9}, {3.6741750156920567`*^9, 
+   3.6741750162471347`*^9}, 3.6741759450763245`*^9, 3.6741761462319994`*^9, {
+   3.674177702031814*^9, 3.6741777761349797`*^9}, {3.6741780393472056`*^9, 
+   3.674178041459342*^9}, 3.674178488883832*^9, {3.674178526674939*^9, 
+   3.6741785730072374`*^9}, {3.674178646208429*^9, 3.67417865274189*^9}, {
+   3.674178965137334*^9, 3.6741789655532293`*^9}, {3.6741791367759895`*^9, 
+   3.674179136898523*^9}, {3.6741792149490356`*^9, 3.674179218882082*^9}, {
+   3.6741792826631775`*^9, 3.6741792911349*^9}, {3.6741793536038446`*^9, 
+   3.6741793541662827`*^9}, {3.674179408213982*^9, 3.6741794341254435`*^9}, {
+   3.6741798580161834`*^9, 3.6741798628982043`*^9}, {3.67433650201591*^9, 
+   3.674336551563244*^9}, {3.6743366918275833`*^9, 3.6743366923743877`*^9}, {
+   3.6743368181410666`*^9, 3.6743368500475664`*^9}, {3.6743370209238863`*^9, 
+   3.6743370210801363`*^9}, {3.674649142589837*^9, 3.6746491566283035`*^9}, {
+   3.674649417380096*^9, 3.6746494178800526`*^9}, {3.6746494532871933`*^9, 
+   3.674649453434342*^9}, {3.6746495056742487`*^9, 3.6746495305738325`*^9}, {
+   3.6746518111297135`*^9, 3.674651829040573*^9}, {3.6746519961264954`*^9, 
+   3.674652058741671*^9}, {3.6746521665687275`*^9, 3.6746521677179623`*^9}, {
+   3.674652238619239*^9, 3.674652263683218*^9}, {3.6746524800476265`*^9, 
+   3.674652480263592*^9}, {3.674652654552252*^9, 3.6746526640904555`*^9}, {
+   3.6746527371674414`*^9, 3.6746527375048556`*^9}, {3.6746538868671937`*^9, 
+   3.6746538871709127`*^9}, {3.674653957375814*^9, 3.674653964591695*^9}, {
+   3.6746540580056615`*^9, 3.674654067811757*^9}, {3.6746542393454046`*^9, 
+   3.674654268144058*^9}, {3.674654322397176*^9, 3.67465432263391*^9}, {
+   3.674654379393594*^9, 3.674654464998453*^9}, {3.674668910557641*^9, 
+   3.674668910905605*^9}, {3.674668964623624*^9, 3.674668991635687*^9}, {
+   3.6746690715411415`*^9, 3.674669071687354*^9}, {3.6746691249737816`*^9, 
+   3.674669146688639*^9}, {3.6746696738697634`*^9, 3.674669677442436*^9}, {
+   3.67466973976941*^9, 3.6746697618268013`*^9}, {3.674670559603403*^9, 
+   3.6746705601546774`*^9}, {3.6746706775851297`*^9, 
+   3.6746706987289143`*^9}, {3.674670844044803*^9, 3.674670864319009*^9}, {
+   3.6746709068111763`*^9, 3.6746709069844427`*^9}, {3.674671096910656*^9, 
+   3.6746710978442965`*^9}, {3.6746711798170595`*^9, 3.674671180863818*^9}, {
+   3.67467121856405*^9, 3.674671220304728*^9}, {3.6746712570964627`*^9, 
+   3.6746712815855875`*^9}, {3.6746713248042927`*^9, 
+   3.6746713734787564`*^9}, {3.674676350131113*^9, 3.6746763512014613`*^9}, {
+   3.6747047912126894`*^9, 3.6747047916825233`*^9}, {3.674704857977661*^9, 
+   3.6747048707841835`*^9}, {3.674704912866191*^9, 3.6747049188369055`*^9}, {
+   3.674704950890176*^9, 3.6747049734220767`*^9}, {3.6747051194260263`*^9, 
+   3.674705129832131*^9}, {3.6747051787907624`*^9, 3.6747051790349264`*^9}, {
+   3.6747052464930997`*^9, 3.6747052507005053`*^9}, {3.674705514334939*^9, 
+   3.6747055170538883`*^9}, {3.6747056774210014`*^9, 3.67470567757108*^9}, {
+   3.674709009341499*^9, 3.6747090210357857`*^9}, {3.6747091175331097`*^9, 
+   3.67470913646673*^9}, {3.674709194488183*^9, 3.674709270671083*^9}, {
+   3.6747093250739403`*^9, 3.6747093266390057`*^9}, {3.674709376944562*^9, 
+   3.674709377409395*^9}, {3.674709678277161*^9, 3.674709679198312*^9}, {
+   3.6747097638589525`*^9, 3.674709764030073*^9}, {3.674709834509552*^9, 
+   3.674709835075456*^9}, {3.674710222576147*^9, 3.674710237986861*^9}, {
+   3.6747119812614193`*^9, 3.6747119815806637`*^9}, {3.674720903088937*^9, 
+   3.674720915749672*^9}, 3.6747276388525796`*^9, {3.6747276872327824`*^9, 
+   3.6747277027307253`*^9}, {3.6747277895628767`*^9, 3.674727846279991*^9}, {
+   3.6747281216940985`*^9, 3.674728122280125*^9}, {3.6747283049023457`*^9, 
+   3.6747283104869123`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"del arroz\"\>", ",", "\<\"cuanto cuesta 1 tarro de leche\"\>", 
+   ",", "\<\"cual es el precio de 1 kg de mandarinas\"\>", 
+   ",", "\<\"cual es el precio de 2 botellas de aceite de oliva\"\>", 
+   ",", "\<\"cuanto cuesta 1 l de leche y 5 kg de azucar rubia\"\>", 
+   ",", "\<\"cuanto cuesta 3 kg de azucar rubia\"\>", 
+   ",", "\<\"a como esta kilo de fideos\"\>", 
+   ",", "\<\"3 envases de shampoo\"\>", 
+   ",", "\<\"cuanto esta 1 l de leche\"\>", ",", "\<\"5 kg de arroz\"\>", 
+   ",", "\<\"lavavajillas\"\>", ",", "\<\"8 kilos de pollo\"\>"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.674728311252036*^9, 3.6747284119339013`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"ParsingTestTable", "[", 
+  RowBox[{"pPARSERPRODUCTS", ",", 
+   RowBox[{"ToLowerCase", "@", "sentences"}], ",", 
+   RowBox[{"\"\<Layout\>\"", "\[Rule]", "\"\<Vertical\>\""}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.6741727956158733`*^9, 3.6741728482717876`*^9}, 
+   3.674174960330305*^9, 3.6741784812244067`*^9}],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["1",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], "\<\"del arroz\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{"ProductsObjects", "[", 
+        RowBox[{"{", 
+         RowBox[{"Mult", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", "}"}], ",", "\<\"arroz\"\>"}], "}"}]}], "}"}], 
+          "]"}], "}"}], "]"}], "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["2",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], "\<\"cuanto cuesta 1 tarro de leche\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Adverb", "[", "\<\"cuanto\"\>", "]"}], ",", 
+        RowBox[{"Verb", "[", "\<\"cuesta\"\>", "]"}], ",", 
+        RowBox[{"ProductsObjects", "[", 
+         RowBox[{"{", 
+          RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Presentation", "[", "\<\"tarro\"\>", "]"}], 
+               ",", "\<\"leche\"\>"}], "}"}]}], "}"}], "]"}], "}"}], "]"}]}], 
+       "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["3",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[
+       0.5]], "\<\"cual es el precio de 1 kg de mandarinas\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Adverb", "[", "\<\"cual\"\>", "]"}], ",", 
+        RowBox[{"Verb", "[", "\<\"es\"\>", "]"}], ",", 
+        RowBox[{"Subj", "[", "\<\"precio\"\>", "]"}], ",", 
+        RowBox[{"ProductsObjects", "[", 
+         RowBox[{"{", 
+          RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Presentation", "[", "\<\"kg\"\>", "]"}], 
+               ",", "\<\"mandarinas\"\>"}], "}"}]}], "}"}], "]"}], "}"}], 
+         "]"}]}], "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["4",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[
+       0.5]], "\<\"cual es el precio de 2 botellas de aceite de oliva\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Adverb", "[", "\<\"cual\"\>", "]"}], ",", 
+        RowBox[{"Verb", "[", "\<\"es\"\>", "]"}], ",", 
+        RowBox[{"Subj", "[", "\<\"precio\"\>", "]"}], ",", 
+        RowBox[{"ProductsObjects", "[", 
+         RowBox[{"{", 
+          RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+            RowBox[{"2", ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Presentation", "[", "\<\"botellas\"\>", "]"}], 
+               ",", "\<\"aceite\"\>"}], "}"}]}], "}"}], "]"}], "}"}], "]"}]}],
+        "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", 
+      RowBox[{"\<\"de\"\>", ",", "\<\"oliva\"\>"}], "}"}]},
+    {
+     StyleBox["5",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[
+       0.5]], "\<\"cuanto cuesta 1 l de leche y 5 kg de azucar rubia\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Adverb", "[", "\<\"cuanto\"\>", "]"}], ",", 
+        RowBox[{"Verb", "[", "\<\"cuesta\"\>", "]"}], ",", 
+        RowBox[{"ProductsObjects", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Mult", "[", 
+            RowBox[{"{", 
+             RowBox[{"1", ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Presentation", "[", "\<\"l\"\>", "]"}], 
+                ",", "\<\"leche\"\>"}], "}"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Mult", "[", 
+            RowBox[{"{", 
+             RowBox[{"5", ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Presentation", "[", "\<\"kg\"\>", "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"\<\"azucar\"\>", ",", "\<\"rubia\"\>"}], "}"}]}], 
+               "}"}]}], "}"}], "]"}]}], "}"}], "]"}]}], "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["6",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[
+       0.5]], "\<\"cuanto cuesta 3 kg de azucar rubia\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Adverb", "[", "\<\"cuanto\"\>", "]"}], ",", 
+        RowBox[{"Verb", "[", "\<\"cuesta\"\>", "]"}], ",", 
+        RowBox[{"ProductsObjects", "[", 
+         RowBox[{"{", 
+          RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+            RowBox[{"3", ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Presentation", "[", "\<\"kg\"\>", "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"\<\"azucar\"\>", ",", "\<\"rubia\"\>"}], "}"}]}], 
+              "}"}]}], "}"}], "]"}], "}"}], "]"}]}], "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["7",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], "\<\"a como esta kilo de fideos\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Adverb", "[", 
+         RowBox[{"{", 
+          RowBox[{"\<\"a\"\>", ",", "\<\"como\"\>"}], "}"}], "]"}], ",", 
+        RowBox[{"Verb", "[", "\<\"esta\"\>", "]"}], ",", 
+        RowBox[{"ProductsObjects", "[", 
+         RowBox[{"{", 
+          RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"{", "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Presentation", "[", "\<\"kilo\"\>", "]"}], 
+               ",", "\<\"fideos\"\>"}], "}"}]}], "}"}], "]"}], "}"}], "]"}]}],
+        "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["8",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], "\<\"3 envases de shampoo\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{"ProductsObjects", "[", 
+        RowBox[{"{", 
+         RowBox[{"Mult", "[", 
+          RowBox[{"{", 
+           RowBox[{"3", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Presentation", "[", "\<\"envases\"\>", "]"}], 
+              ",", "\<\"shampoo\"\>"}], "}"}]}], "}"}], "]"}], "}"}], "]"}], 
+       "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["9",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], "\<\"cuanto esta 1 l de leche\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Adverb", "[", "\<\"cuanto\"\>", "]"}], ",", 
+        RowBox[{"Verb", "[", "\<\"esta\"\>", "]"}], ",", 
+        RowBox[{"ProductsObjects", "[", 
+         RowBox[{"{", 
+          RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Presentation", "[", "\<\"l\"\>", "]"}], 
+               ",", "\<\"leche\"\>"}], "}"}]}], "}"}], "]"}], "}"}], "]"}]}], 
+       "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["10",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], "\<\"5 kg de arroz\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{"ProductsObjects", "[", 
+        RowBox[{"{", 
+         RowBox[{"Mult", "[", 
+          RowBox[{"{", 
+           RowBox[{"5", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Presentation", "[", "\<\"kg\"\>", "]"}], 
+              ",", "\<\"arroz\"\>"}], "}"}]}], "}"}], "]"}], "}"}], "]"}], 
+       "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["11",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], "\<\"lavavajillas\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{"ProductsObjects", "[", 
+        RowBox[{"{", "\<\"lavavajillas\"\>", "}"}], "]"}], "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]},
+    {
+     StyleBox["12",
+      StripOnInput->False,
+      LineColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FrontFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      BackFaceColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      GraphicsColor->RGBColor[
+        Rational[2, 3], 0, 0],
+      FontFamily->"Times",
+      FontSize->16,
+      FontColor->RGBColor[
+        Rational[2, 3], 0, 0]], 
+     StyleBox["\<\"command:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], "\<\"8 kilos de pollo\"\>"},
+    {"\<\"\"\>", 
+     StyleBox["\<\"parsed:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"ParserProducts", "[", 
+      RowBox[{"{", 
+       RowBox[{"ProductsObjects", "[", 
+        RowBox[{"{", 
+         RowBox[{"Mult", "[", 
+          RowBox[{"{", 
+           RowBox[{"8", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Presentation", "[", "\<\"kilos\"\>", "]"}], 
+              ",", "\<\"pollo\"\>"}], "}"}]}], "}"}], "]"}], "}"}], "]"}], 
+       "}"}], "]"}]},
+    {"\<\"\"\>", 
+     StyleBox["\<\"residual:\"\>",
+      StripOnInput->False,
+      LineColor->GrayLevel[0.5],
+      FrontFaceColor->GrayLevel[0.5],
+      BackFaceColor->GrayLevel[0.5],
+      GraphicsColor->GrayLevel[0.5],
+      FontColor->GrayLevel[0.5]], 
+     RowBox[{"{", "}"}]}
+   },
+   AutoDelete->False,
+   GridBoxAlignment->{"Columns" -> {Right, Right, Left}},
+   GridBoxDividers->{
+    "Columns" -> {True, True, False, True}, 
+     "Rows" -> {
+      True, False, False, True, False, False, True, False, False, True, False,
+        False, True, False, False, True, False, False, True, False, False, 
+       True, False, False, True, False, False, True, False, False, True, 
+       False, False, True, False, False, True, False, False, True, False, 
+       False, True, False, False, True, False, False, True, False, False, 
+       True, False, False, True, False, False, True, False, False, True, 
+       False, False, True, False, False, True, False, False, True, False, 
+       False, True, False, False, True, False, False, True, False, False, 
+       True, False, False, True, False, False, True, False, False, True, 
+       False, False, True, False, False, True, False, False, True, False, 
+       False, True, False, False, True, False, False, True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}},
+   GridBoxSpacings->{"Columns" -> {{0.5}}, "Rows" -> {{0.75}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.6741728790992894`*^9, {3.674173185491619*^9, 3.67417318942915*^9}, 
+   3.6741747950930395`*^9, 3.6741748300518208`*^9, 3.6741748888937798`*^9, 
+   3.674175019464405*^9, 3.674175364653819*^9, 3.6741755765071282`*^9, {
+   3.6741759344698067`*^9, 3.6741759486535974`*^9}, 3.6741761549482484`*^9, 
+   3.6741766251151123`*^9, 3.674176920667097*^9, 3.674177394009729*^9, 
+   3.6741776901211443`*^9, 3.674178491863826*^9, {3.6741785343245106`*^9, 
+   3.674178574929057*^9}, {3.6741789593604136`*^9, 3.6741789681916475`*^9}, {
+   3.6741791124835577`*^9, 3.674179139373619*^9}, 3.6741792212233925`*^9, 
+   3.6741793035715475`*^9, {3.674179356041318*^9, 3.67417937355883*^9}, {
+   3.6741794112780976`*^9, 3.674179436220622*^9}, {3.674179860409368*^9, 
+   3.6741798648905983`*^9}, 3.6743364924377384`*^9, 3.674336555266327*^9, 
+   3.674336645733399*^9, {3.6743366946869164`*^9, 3.6743367205152597`*^9}, {
+   3.674336823750414*^9, 3.6743368519850082`*^9}, 3.6743368899853325`*^9, {
+   3.674336973845338*^9, 3.6743369913923454`*^9}, 3.6743370254707365`*^9, 
+   3.674647989156731*^9, {3.6746491452752447`*^9, 3.6746491586445427`*^9}, {
+   3.6746493379312153`*^9, 3.674649367443412*^9}, {3.674649408645568*^9, 
+   3.674649419582103*^9}, {3.6746494498703814`*^9, 3.6746494559194813`*^9}, 
+   3.674649533976666*^9, {3.674651970986329*^9, 3.6746520023616877`*^9}, {
+   3.6746520381523533`*^9, 3.674652063499294*^9}, 3.674652128823639*^9, {
+   3.6746522216540413`*^9, 3.674652243007125*^9}, {3.674652283719755*^9, 
+   3.6746522862534127`*^9}, {3.6746523233506637`*^9, 3.6746523357211847`*^9}, 
+   3.674652404464151*^9, {3.674652464399049*^9, 3.6746524825269194`*^9}, {
+   3.6746526591036663`*^9, 3.67465266664388*^9}, {3.6746527259616117`*^9, 
+   3.674652740205304*^9}, 3.674652840332269*^9, 3.6746538903742723`*^9, 
+   3.674653967113791*^9, 3.6746540614555063`*^9, 3.674654125247266*^9, {
+   3.6746541659282284`*^9, 3.674654168898822*^9}, 3.6746542730476027`*^9, {
+   3.67465431117365*^9, 3.67465432485216*^9}, {3.6746543820424194`*^9, 
+   3.6746544673837223`*^9}, 3.674668915194847*^9, 3.6746690130214024`*^9, {
+   3.674669059454626*^9, 3.6746690747240205`*^9}, {3.6746691391067305`*^9, 
+   3.674669149202143*^9}, 3.674669680440875*^9, {3.674669743315523*^9, 
+   3.674669763833621*^9}, 3.674670340266128*^9, 3.6746705637757797`*^9, 
+   3.674670633313021*^9, {3.6746707814960585`*^9, 3.6746707918364663`*^9}, {
+   3.674670847150885*^9, 3.6746708673467517`*^9}, {3.674670899833112*^9, 
+   3.674670910243334*^9}, 3.6746709762644978`*^9, 3.6746711016354723`*^9, {
+   3.6746711773774343`*^9, 3.674671184124618*^9}, {3.6746712142025375`*^9, 
+   3.674671225122773*^9}, {3.674671259826999*^9, 3.674671326949218*^9}, {
+   3.674671361014005*^9, 3.674671375981719*^9}, 3.674679661633924*^9, {
+   3.674704812628255*^9, 3.6747048331803737`*^9}, {3.674704937814889*^9, 
+   3.674704984780822*^9}, {3.6747050792618465`*^9, 3.674705123323452*^9}, {
+   3.674705160414934*^9, 3.6747051851416826`*^9}, 3.674705256348877*^9, {
+   3.6747055084260306`*^9, 3.6747055218280363`*^9}, 3.6747055608244143`*^9, {
+   3.674705644799755*^9, 3.6747056804451113`*^9}, 3.6747090239513407`*^9, {
+   3.6747091223770294`*^9, 3.6747091412066994`*^9}, {3.674709215867554*^9, 
+   3.674709248291009*^9}, 3.6747092795131707`*^9, 3.6747093311403675`*^9, 
+   3.674709381331162*^9, 3.6747095941433277`*^9, {3.6747096822365847`*^9, 
+   3.674709699917591*^9}, 3.674709770344132*^9, {3.674709819573847*^9, 
+   3.674709840359864*^9}, 3.6747102440309677`*^9, 3.6747118191748486`*^9, 
+   3.674711928322548*^9, 3.6747119848162975`*^9, 3.67472092039372*^9, 
+   3.6747277079514456`*^9, {3.6747278028729115`*^9, 3.6747278490517187`*^9}, 
+   3.6747281251168823`*^9, 3.6747281937319746`*^9, 3.674728244287937*^9, 
+   3.674728317116048*^9, {3.6747284136879635`*^9, 3.6747284388613415`*^9}, 
+   3.6747284810531363`*^9, 3.6747285258274913`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TreeForm", "[", 
+  RowBox[{"ParserProducts", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Adverb", "[", "\"\<cual\>\"", "]"}], ",", 
+     RowBox[{"Verb", "[", "\"\<es\>\"", "]"}], ",", 
+     RowBox[{"Subj", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<el\>\"", ",", "\"\<precio\>\""}], "}"}], "]"}], ",", 
+     RowBox[{"ProductsObjects", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<kg\>\"", ",", "\"\<arroz\>\""}], "}"}], "]"}]}], "}"}], 
+   "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.674648036028741*^9, 3.6746480390450535`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[GraphicsComplexBox[{{1.5036188231122247`, 3.0072376462244494`}, {
+    1.5036188231122247`, 2.255428234668337}, {0., 1.5036188231122247`}, {0., 
+    0.7518094115561125}, {0.7518094115561124, 1.5036188231122247`}, {
+    0.7518094115561124, 0.7518094115561125}, {1.5036188231122247`, 
+    1.5036188231122247`}, {1.5036188231122247`, 0.7518094115561125}, {
+    1.1277141173341685`, 0.}, {1.8795235288902807`, 0.}, {3.0072376462244494`,
+     1.5036188231122247`}, {3.0072376462244494`, 0.7518094115561125}, {
+    2.631332940446393, 0.}, {3.3831423520025057`, 0.}}, {
+     {RGBColor[0.55, 0.45, 0.45], 
+      LineBox[{{1, 2}, {2, 3}, {2, 5}, {2, 7}, {2, 11}, {3, 4}, {5, 6}, {7, 
+       8}, {8, 9}, {8, 10}, {11, 12}, {12, 13}, {12, 14}}]}, {
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["ParserProducts", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 1],
+        TagBox[
+         RowBox[{"ParserProducts", "[", 
+           RowBox[{"{", 
+             RowBox[{
+               RowBox[{"Adverb", "[", "\"cual\"", "]"}], ",", 
+               RowBox[{"Verb", "[", "\"es\"", "]"}], ",", 
+               RowBox[{"Subj", "[", 
+                 RowBox[{"{", 
+                   RowBox[{"\"el\"", ",", "\"precio\""}], "}"}], "]"}], ",", 
+               RowBox[{"ProductsObjects", "[", 
+                 RowBox[{"{", 
+                   RowBox[{"\"kg\"", ",", "\"arroz\""}], "}"}], "]"}]}], 
+             "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`ParserProducts[{
+           $CellContext`Adverb["cual"], 
+           $CellContext`Verb["es"], 
+           $CellContext`Subj[{"el", "precio"}], 
+           $CellContext`ProductsObjects[{"kg", "arroz"}]}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 2],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"Adverb", "[", "\"cual\"", "]"}], ",", 
+             RowBox[{"Verb", "[", "\"es\"", "]"}], ",", 
+             RowBox[{"Subj", "[", 
+               RowBox[{"{", 
+                 RowBox[{"\"el\"", ",", "\"precio\""}], "}"}], "]"}], ",", 
+             RowBox[{"ProductsObjects", "[", 
+               RowBox[{"{", 
+                 RowBox[{"\"kg\"", ",", "\"arroz\""}], "}"}], "]"}]}], "}"}], 
+         HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Adverb["cual"], 
+          $CellContext`Verb["es"], 
+          $CellContext`Subj[{"el", "precio"}], 
+          $CellContext`ProductsObjects[{"kg", "arroz"}]}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Adverb", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 3],
+        TagBox[
+         RowBox[{"Adverb", "[", "\"cual\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Adverb["cual"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"cual\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 4],
+        TagBox["\"cual\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["cual"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Verb", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 5],
+        TagBox[
+         RowBox[{"Verb", "[", "\"es\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Verb["es"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"es\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 6],
+        TagBox["\"es\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["es"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Subj", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 7],
+        TagBox[
+         RowBox[{"Subj", "[", 
+           RowBox[{"{", 
+             RowBox[{"\"el\"", ",", "\"precio\""}], "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Subj[{"el", "precio"}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 8],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"\"el\"", ",", "\"precio\""}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{"el", "precio"}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"el\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 9],
+        TagBox["\"el\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["el"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"precio\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 10],
+        TagBox["\"precio\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["precio"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["ProductsObjects", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 11],
+        TagBox[
+         RowBox[{"ProductsObjects", "[", 
+           RowBox[{"{", 
+             RowBox[{"\"kg\"", ",", "\"arroz\""}], "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`ProductsObjects[{"kg", "arroz"}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 12],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"\"kg\"", ",", "\"arroz\""}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{"kg", "arroz"}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"kg\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 13],
+        TagBox["\"kg\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["kg"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"arroz\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.027586206896551724`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 14],
+        TagBox["\"arroz\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["arroz"], "Tooltip"]& ]}}],
+   Annotation[#, 
+    VertexCoordinateRules -> {{1.5036188231122247`, 3.0072376462244494`}, {
+     1.5036188231122247`, 2.255428234668337}, {0., 1.5036188231122247`}, {0., 
+     0.7518094115561125}, {0.7518094115561124, 1.5036188231122247`}, {
+     0.7518094115561124, 0.7518094115561125}, {1.5036188231122247`, 
+     1.5036188231122247`}, {1.5036188231122247`, 0.7518094115561125}, {
+     1.1277141173341685`, 0.}, {1.8795235288902807`, 0.}, {
+     3.0072376462244494`, 1.5036188231122247`}, {3.0072376462244494`, 
+     0.7518094115561125}, {2.631332940446393, 0.}, {3.3831423520025057`, 
+     0.}}]& ],
+  AspectRatio->NCache[Rational[10, 29]^Rational[1, 2], 0.5872202195147035],
+  FormatType:>StandardForm,
+  FrameTicks->Automatic,
+  PlotRange->All,
+  PlotRangePadding->Scaled[0.1]]], "Output",
+ CellChangeTimes->{3.674648040515972*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TreeForm", "[", 
+  RowBox[{"ParserProducts", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Adverb", "[", "\"\<cuanto\>\"", "]"}], ",", 
+     RowBox[{"Verb", "[", "\"\<cuesta\>\"", "]"}], ",", 
+     RowBox[{"ProductsObjects", "[", 
+      RowBox[{"{", 
+       RowBox[{"Mult", "[", 
+        RowBox[{"{", 
+         RowBox[{"10", ",", 
+          RowBox[{"{", 
+           RowBox[{"\"\<kg\>\"", ",", "\"\<mandarinas\>\""}], "}"}]}], "}"}], 
+        "]"}], "}"}], "]"}]}], "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6741797129187293`*^9, 3.6741797243940797`*^9}, 
+   3.6746481834863873`*^9}],
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[GraphicsComplexBox[{{0.9013878188659973, 6.309714732061981}, {
+    0.9013878188659973, 5.408326913195984}, {0., 4.5069390943299865`}, {0., 
+    3.6055512754639896`}, {0.9013878188659973, 4.5069390943299865`}, {
+    0.9013878188659973, 3.6055512754639896`}, {1.8027756377319946`, 
+    4.5069390943299865`}, {1.8027756377319946`, 3.6055512754639896`}, {
+    1.8027756377319946`, 2.704163456597992}, {1.8027756377319946`, 
+    1.8027756377319948`}, {1.3520817282989959`, 0.9013878188659978}, {
+    2.2534695471649933`, 0.9013878188659978}, {1.8027756377319946`, 0.}, {
+    2.7041634565979917`, 0.}}, {
+     {RGBColor[0.55, 0.45, 0.45], 
+      LineBox[{{1, 2}, {2, 3}, {2, 5}, {2, 7}, {3, 4}, {5, 6}, {7, 8}, {8, 
+       9}, {9, 10}, {10, 11}, {10, 12}, {12, 13}, {12, 14}}]}, {
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["ParserProducts", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 1],
+        TagBox[
+         RowBox[{"ParserProducts", "[", 
+           RowBox[{"{", 
+             RowBox[{
+               RowBox[{"Adverb", "[", "\"cuanto\"", "]"}], ",", 
+               RowBox[{"Verb", "[", "\"cuesta\"", "]"}], ",", 
+               RowBox[{"ProductsObjects", "[", 
+                 RowBox[{"{", 
+                   RowBox[{"Mult", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"10", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"kg\"", ",", "\"mandarinas\""}], "}"}]}], "}"}],
+                     "]"}], "}"}], "]"}]}], "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`ParserProducts[{
+           $CellContext`Adverb["cuanto"], 
+           $CellContext`Verb["cuesta"], 
+           $CellContext`ProductsObjects[{
+             $CellContext`Mult[{10, {"kg", "mandarinas"}}]}]}]], 
+        "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 2],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"Adverb", "[", "\"cuanto\"", "]"}], ",", 
+             RowBox[{"Verb", "[", "\"cuesta\"", "]"}], ",", 
+             RowBox[{"ProductsObjects", "[", 
+               RowBox[{"{", 
+                 RowBox[{"Mult", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"10", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"\"kg\"", ",", "\"mandarinas\""}], "}"}]}], "}"}],
+                    "]"}], "}"}], "]"}]}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Adverb["cuanto"], 
+          $CellContext`Verb["cuesta"], 
+          $CellContext`ProductsObjects[{
+            $CellContext`Mult[{10, {"kg", "mandarinas"}}]}]}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Adverb", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 3],
+        TagBox[
+         RowBox[{"Adverb", "[", "\"cuanto\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Adverb["cuanto"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"cuanto\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 4],
+        TagBox["\"cuanto\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["cuanto"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Verb", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 5],
+        TagBox[
+         RowBox[{"Verb", "[", "\"cuesta\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Verb["cuesta"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"cuesta\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 6],
+        TagBox["\"cuesta\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["cuesta"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["ProductsObjects", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 7],
+        TagBox[
+         RowBox[{"ProductsObjects", "[", 
+           RowBox[{"{", 
+             RowBox[{"Mult", "[", 
+               RowBox[{"{", 
+                 RowBox[{"10", ",", 
+                   RowBox[{"{", 
+                    RowBox[{"\"kg\"", ",", "\"mandarinas\""}], "}"}]}], "}"}],
+                "]"}], "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`ProductsObjects[{
+           $CellContext`Mult[{10, {"kg", "mandarinas"}}]}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 8],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"Mult", "[", 
+             RowBox[{"{", 
+               RowBox[{"10", ",", 
+                 RowBox[{"{", 
+                   RowBox[{"\"kg\"", ",", "\"mandarinas\""}], "}"}]}], "}"}], 
+             "]"}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Mult[{10, {"kg", "mandarinas"}}]}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Mult", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 9],
+        TagBox[
+         RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+             RowBox[{"10", ",", 
+               RowBox[{"{", 
+                 RowBox[{"\"kg\"", ",", "\"mandarinas\""}], "}"}]}], "}"}], 
+           "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Mult[{10, {"kg", "mandarinas"}}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 10],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"10", ",", 
+             RowBox[{"{", 
+               RowBox[{"\"kg\"", ",", "\"mandarinas\""}], "}"}]}], "}"}], 
+         HoldForm]],
+       Annotation[#, 
+        HoldForm[{10, {"kg", "mandarinas"}}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["10",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 11],
+        TagBox["10", HoldForm]],
+       Annotation[#, 
+        HoldForm[10], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 12],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"\"kg\"", ",", "\"mandarinas\""}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{"kg", "mandarinas"}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"kg\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 13],
+        TagBox["\"kg\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["kg"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"mandarinas\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 14],
+        TagBox["\"mandarinas\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["mandarinas"], "Tooltip"]& ]}}],
+   Annotation[#, 
+    VertexCoordinateRules -> {{0.9013878188659973, 6.309714732061981}, {
+     0.9013878188659973, 5.408326913195984}, {0., 4.5069390943299865`}, {0., 
+     3.6055512754639896`}, {0.9013878188659973, 4.5069390943299865`}, {
+     0.9013878188659973, 3.6055512754639896`}, {1.8027756377319946`, 
+     4.5069390943299865`}, {1.8027756377319946`, 3.6055512754639896`}, {
+     1.8027756377319946`, 2.704163456597992}, {1.8027756377319946`, 
+     1.8027756377319948`}, {1.3520817282989959`, 0.9013878188659978}, {
+     2.2534695471649933`, 0.9013878188659978}, {1.8027756377319946`, 0.}, {
+     2.7041634565979917`, 0.}}]& ],
+  AspectRatio->NCache[
+    Rational[4, 5], 0.8],
+  FormatType:>StandardForm,
+  FrameTicks->Automatic,
+  PlotRange->All,
+  PlotRangePadding->Scaled[0.1]]], "Output",
+ CellChangeTimes->{{3.674179716362793*^9, 3.674179725114255*^9}, 
+   3.6746480664434423`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TreeForm", "[", 
+  RowBox[{"ParserProducts", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Adverb", "[", "\"\<cuanto\>\"", "]"}], ",", 
+     RowBox[{"Verb", "[", "\"\<cuesta\>\"", "]"}], ",", 
+     RowBox[{"ProductsObjects", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Mult", "[", 
+         RowBox[{"{", 
+          RowBox[{"1", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Presentation", "[", "\"\<l\>\"", "]"}], ",", 
+             "\"\<leche\>\""}], "}"}]}], "}"}], "]"}], ",", 
+        RowBox[{"Mult", "[", 
+         RowBox[{"{", 
+          RowBox[{"5", ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Presentation", "[", "\"\<kg\>\"", "]"}], ",", 
+             "\"\<azucar\>\""}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}]}], 
+    "}"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6746544803782034`*^9, 3.674654487200079*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[GraphicsComplexBox[CompressedData["
+1:eJxTTMoPSmViYGAQA2IQ3fvtsPkqizf2EFrGAcbfXX76w5SNEg4MUPDqx6WV
+9VqicL5E1a2krMWCcPUweRgfVf4Pmvwfe3T9EJoHzTxWKP+OfQ+KOV/hfJj6
+CSjmvLGHuRNm3wSs5vI4wPgwGuIuRgeY+ZBw4HBAtZ/VAd08VPt44PIAzb6t
+YQ==
+    "], {
+     {RGBColor[0.55, 0.45, 0.45], 
+      LineBox[{{1, 2}, {2, 3}, {2, 5}, {2, 7}, {3, 4}, {5, 6}, {7, 8}, {8, 
+       9}, {8, 16}, {9, 10}, {10, 11}, {10, 12}, {12, 13}, {12, 15}, {13, 
+       14}, {16, 17}, {17, 18}, {17, 19}, {19, 20}, {19, 22}, {20, 21}}]}, {
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["ParserProducts", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 1],
+        TagBox[
+         RowBox[{"ParserProducts", "[", 
+           RowBox[{"{", 
+             RowBox[{
+               RowBox[{"Adverb", "[", "\"cuanto\"", "]"}], ",", 
+               RowBox[{"Verb", "[", "\"cuesta\"", "]"}], ",", 
+               RowBox[{"ProductsObjects", "[", 
+                 RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Mult", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"l\"", "]"}], ",", 
+                    "\"leche\""}], "}"}]}], "}"}], "]"}], ",", 
+                    RowBox[{"Mult", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"5", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"kg\"", "]"}], ",", 
+                    "\"azucar\""}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}]}], 
+             "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`ParserProducts[{
+           $CellContext`Adverb["cuanto"], 
+           $CellContext`Verb["cuesta"], 
+           $CellContext`ProductsObjects[{
+             $CellContext`Mult[{1, {
+                $CellContext`Presentation["l"], "leche"}}], 
+             $CellContext`Mult[{5, {
+                $CellContext`Presentation["kg"], "azucar"}}]}]}]], 
+        "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 2],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"Adverb", "[", "\"cuanto\"", "]"}], ",", 
+             RowBox[{"Verb", "[", "\"cuesta\"", "]"}], ",", 
+             RowBox[{"ProductsObjects", "[", 
+               RowBox[{"{", 
+                 RowBox[{
+                   RowBox[{"Mult", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"l\"", "]"}], ",", 
+                    "\"leche\""}], "}"}]}], "}"}], "]"}], ",", 
+                   RowBox[{"Mult", "[", 
+                    RowBox[{"{", 
+                    RowBox[{"5", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"kg\"", "]"}], ",", 
+                    "\"azucar\""}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}]}], 
+           "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Adverb["cuanto"], 
+          $CellContext`Verb["cuesta"], 
+          $CellContext`ProductsObjects[{
+            $CellContext`Mult[{1, {
+               $CellContext`Presentation["l"], "leche"}}], 
+            $CellContext`Mult[{5, {
+               $CellContext`Presentation["kg"], "azucar"}}]}]}], 
+        "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Adverb", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 3],
+        TagBox[
+         RowBox[{"Adverb", "[", "\"cuanto\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Adverb["cuanto"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"cuanto\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 4],
+        TagBox["\"cuanto\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["cuanto"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Verb", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 5],
+        TagBox[
+         RowBox[{"Verb", "[", "\"cuesta\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Verb["cuesta"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"cuesta\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 6],
+        TagBox["\"cuesta\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["cuesta"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["ProductsObjects", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 7],
+        TagBox[
+         RowBox[{"ProductsObjects", "[", 
+           RowBox[{"{", 
+             RowBox[{
+               RowBox[{"Mult", "[", 
+                 RowBox[{"{", 
+                   RowBox[{"1", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"l\"", "]"}], ",", 
+                    "\"leche\""}], "}"}]}], "}"}], "]"}], ",", 
+               RowBox[{"Mult", "[", 
+                 RowBox[{"{", 
+                   RowBox[{"5", ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"kg\"", "]"}], ",", 
+                    "\"azucar\""}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}], 
+         HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`ProductsObjects[{
+           $CellContext`Mult[{1, {
+              $CellContext`Presentation["l"], "leche"}}], 
+           $CellContext`Mult[{5, {
+              $CellContext`Presentation["kg"], "azucar"}}]}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 8],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"Mult", "[", 
+               RowBox[{"{", 
+                 RowBox[{"1", ",", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"l\"", "]"}], ",", 
+                    "\"leche\""}], "}"}]}], "}"}], "]"}], ",", 
+             RowBox[{"Mult", "[", 
+               RowBox[{"{", 
+                 RowBox[{"5", ",", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"kg\"", "]"}], ",", 
+                    "\"azucar\""}], "}"}]}], "}"}], "]"}]}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Mult[{1, {
+             $CellContext`Presentation["l"], "leche"}}], 
+          $CellContext`Mult[{5, {
+             $CellContext`Presentation["kg"], "azucar"}}]}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Mult", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 9],
+        TagBox[
+         RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+             RowBox[{"1", ",", 
+               RowBox[{"{", 
+                 RowBox[{
+                   RowBox[{"Presentation", "[", "\"l\"", "]"}], ",", 
+                   "\"leche\""}], "}"}]}], "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Mult[{1, {
+            $CellContext`Presentation["l"], "leche"}}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 10],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"1", ",", 
+             RowBox[{"{", 
+               RowBox[{
+                 RowBox[{"Presentation", "[", "\"l\"", "]"}], ",", 
+                 "\"leche\""}], "}"}]}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{1, {
+           $CellContext`Presentation["l"], "leche"}}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["1",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 11],
+        TagBox["1", HoldForm]],
+       Annotation[#, 
+        HoldForm[1], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 12],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"Presentation", "[", "\"l\"", "]"}], ",", "\"leche\""}], 
+           "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Presentation["l"], "leche"}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Presentation", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 13],
+        TagBox[
+         RowBox[{"Presentation", "[", "\"l\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Presentation["l"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"l\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 14],
+        TagBox["\"l\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["l"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"leche\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 15],
+        TagBox["\"leche\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["leche"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Mult", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 16],
+        TagBox[
+         RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+             RowBox[{"5", ",", 
+               RowBox[{"{", 
+                 RowBox[{
+                   RowBox[{"Presentation", "[", "\"kg\"", "]"}], ",", 
+                   "\"azucar\""}], "}"}]}], "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Mult[{5, {
+            $CellContext`Presentation["kg"], "azucar"}}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 17],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"5", ",", 
+             RowBox[{"{", 
+               RowBox[{
+                 RowBox[{"Presentation", "[", "\"kg\"", "]"}], ",", 
+                 "\"azucar\""}], "}"}]}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{5, {
+           $CellContext`Presentation["kg"], "azucar"}}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["5",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 18],
+        TagBox["5", HoldForm]],
+       Annotation[#, 
+        HoldForm[5], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 19],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"Presentation", "[", "\"kg\"", "]"}], ",", 
+             "\"azucar\""}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Presentation["kg"], "azucar"}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Presentation", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 20],
+        TagBox[
+         RowBox[{"Presentation", "[", "\"kg\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Presentation["kg"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"kg\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 21],
+        TagBox["\"kg\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["kg"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"azucar\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.022857142857142857`],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 22],
+        TagBox["\"azucar\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["azucar"], "Tooltip"]& ]}}],
+   Annotation[#, VertexCoordinateRules -> CompressedData["
+1:eJxTTMoPSmViYGAQA2IQ3fvtsPkqizf2EFrGAcbfXX76w5SNEg4MUPDqx6WV
+9VqicL5E1a2krMWCcPUweRgfVf4Pmvwfe3T9EJoHzTxWKP+OfQ+KOV/hfJj6
+CSjmvLGHuRNm3wSs5vI4wPgwGuIuRgeY+ZBw4HBAtZ/VAd08VPt44PIAzb6t
+YQ==
+     "]]& ],
+  AspectRatio->NCache[3 Rational[2, 35]^Rational[1, 2], 0.7171371656006362],
+  FormatType:>StandardForm,
+  FrameTicks->Automatic,
+  PlotRange->All,
+  PlotRangePadding->Scaled[0.1]]], "Output",
+ CellChangeTimes->{3.674654487986038*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TreeForm", "[", 
+  RowBox[{"ParserProducts", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Adverb", "[", 
+      RowBox[{"{", 
+       RowBox[{"\"\<a\>\"", ",", "\"\<como\>\""}], "}"}], "]"}], ",", 
+     RowBox[{"Verb", "[", "\"\<esta\>\"", "]"}], ",", 
+     RowBox[{"ProductsObjects", "[", 
+      RowBox[{"{", 
+       RowBox[{"Mult", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Presentation", "[", "\"\<kilo\>\"", "]"}], ",", 
+            "\"\<fideos\>\""}], "}"}]}], "}"}], "]"}], "}"}], "]"}]}], "}"}], 
+   "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.6746709330864735`*^9, 3.674670935674192*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  TagBox[GraphicsComplexBox[{{1.3587324409735149`, 7.246573018525412}, {
+    1.3587324409735149`, 6.340751391209736}, {0.45291081365783825`, 
+    5.4349297638940595`}, {0.45291081365783825`, 4.529108136578382}, {0., 
+    3.623286509262706}, {0.9058216273156765, 3.623286509262706}, {
+    1.3587324409735149`, 5.4349297638940595`}, {1.3587324409735149`, 
+    4.529108136578382}, {2.264554068289191, 5.4349297638940595`}, {
+    2.264554068289191, 4.529108136578382}, {2.264554068289191, 
+    3.623286509262706}, {2.264554068289191, 2.7174648819470297`}, {
+    1.811643254631353, 1.8116432546313526`}, {2.7174648819470297`, 
+    1.8116432546313526`}, {2.264554068289191, 0.9058216273156763}, {
+    2.264554068289191, 0.}, {3.170375695604868, 0.9058216273156763}}, {
+     {RGBColor[0.55, 0.45, 0.45], 
+      LineBox[{{1, 2}, {2, 3}, {2, 7}, {2, 9}, {3, 4}, {4, 5}, {4, 6}, {7, 
+       8}, {9, 10}, {10, 11}, {11, 12}, {12, 13}, {12, 14}, {14, 15}, {14, 
+       17}, {15, 16}}]}, {
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["ParserProducts", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 1],
+        TagBox[
+         RowBox[{"ParserProducts", "[", 
+           RowBox[{"{", 
+             RowBox[{
+               RowBox[{"Adverb", "[", 
+                 RowBox[{"{", 
+                   RowBox[{"\"a\"", ",", "\"como\""}], "}"}], "]"}], ",", 
+               RowBox[{"Verb", "[", "\"esta\"", "]"}], ",", 
+               RowBox[{"ProductsObjects", "[", 
+                 RowBox[{"{", 
+                   RowBox[{"Mult", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"kilo\"", "]"}], ",", 
+                    "\"fideos\""}], "}"}]}], "}"}], "]"}], "}"}], "]"}]}], 
+             "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`ParserProducts[{
+           $CellContext`Adverb[{"a", "como"}], 
+           $CellContext`Verb["esta"], 
+           $CellContext`ProductsObjects[{
+             $CellContext`Mult[{{}, {
+                $CellContext`Presentation["kilo"], "fideos"}}]}]}]], 
+        "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 2],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"Adverb", "[", 
+               RowBox[{"{", 
+                 RowBox[{"\"a\"", ",", "\"como\""}], "}"}], "]"}], ",", 
+             RowBox[{"Verb", "[", "\"esta\"", "]"}], ",", 
+             RowBox[{"ProductsObjects", "[", 
+               RowBox[{"{", 
+                 RowBox[{"Mult", "[", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"kilo\"", "]"}], ",", 
+                    "\"fideos\""}], "}"}]}], "}"}], "]"}], "}"}], "]"}]}], 
+           "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Adverb[{"a", "como"}], 
+          $CellContext`Verb["esta"], 
+          $CellContext`ProductsObjects[{
+            $CellContext`Mult[{{}, {
+               $CellContext`Presentation["kilo"], "fideos"}}]}]}], 
+        "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Adverb", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 3],
+        TagBox[
+         RowBox[{"Adverb", "[", 
+           RowBox[{"{", 
+             RowBox[{"\"a\"", ",", "\"como\""}], "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Adverb[{"a", "como"}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 4],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"\"a\"", ",", "\"como\""}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{"a", "como"}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"a\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 5],
+        TagBox["\"a\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["a"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"como\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 6],
+        TagBox["\"como\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["como"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Verb", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 7],
+        TagBox[
+         RowBox[{"Verb", "[", "\"esta\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Verb["esta"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"esta\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 8],
+        TagBox["\"esta\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["esta"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["ProductsObjects", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 9],
+        TagBox[
+         RowBox[{"ProductsObjects", "[", 
+           RowBox[{"{", 
+             RowBox[{"Mult", "[", 
+               RowBox[{"{", 
+                 RowBox[{
+                   RowBox[{"{", "}"}], ",", 
+                   RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Presentation", "[", "\"kilo\"", "]"}], ",", 
+                    "\"fideos\""}], "}"}]}], "}"}], "]"}], "}"}], "]"}], 
+         HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`ProductsObjects[{
+           $CellContext`Mult[{{}, {
+              $CellContext`Presentation["kilo"], "fideos"}}]}]], 
+        "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 10],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{"Mult", "[", 
+             RowBox[{"{", 
+               RowBox[{
+                 RowBox[{"{", "}"}], ",", 
+                 RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Presentation", "[", "\"kilo\"", "]"}], ",", 
+                    "\"fideos\""}], "}"}]}], "}"}], "]"}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Mult[{{}, {
+             $CellContext`Presentation["kilo"], "fideos"}}]}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Mult", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 11],
+        TagBox[
+         RowBox[{"Mult", "[", 
+           RowBox[{"{", 
+             RowBox[{
+               RowBox[{"{", "}"}], ",", 
+               RowBox[{"{", 
+                 RowBox[{
+                   RowBox[{"Presentation", "[", "\"kilo\"", "]"}], ",", 
+                   "\"fideos\""}], "}"}]}], "}"}], "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Mult[{{}, {
+            $CellContext`Presentation["kilo"], "fideos"}}]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 12],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"{", "}"}], ",", 
+             RowBox[{"{", 
+               RowBox[{
+                 RowBox[{"Presentation", "[", "\"kilo\"", "]"}], ",", 
+                 "\"fideos\""}], "}"}]}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{{}, {
+           $CellContext`Presentation["kilo"], "fideos"}}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox[
+            RowBox[{"{", "}"}],
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 13],
+        TagBox[
+         RowBox[{"{", "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["List", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 14],
+        TagBox[
+         RowBox[{"{", 
+           RowBox[{
+             RowBox[{"Presentation", "[", "\"kilo\"", "]"}], ",", 
+             "\"fideos\""}], "}"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[{
+          $CellContext`Presentation["kilo"], "fideos"}], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox["Presentation", "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 15],
+        TagBox[
+         RowBox[{"Presentation", "[", "\"kilo\"", "]"}], HoldForm]],
+       Annotation[#, 
+        HoldForm[
+         $CellContext`Presentation["kilo"]], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"kilo\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 16],
+        TagBox["\"kilo\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["kilo"], "Tooltip"]& ], 
+      TagBox[
+       TooltipBox[InsetBox[
+         FrameBox[
+          StyleBox[
+           TagBox["\<\"fideos\"\>",
+            HoldForm], "StandardForm", "Output",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->Scaled[0.032],
+           FontColor->GrayLevel[0]],
+          Background->RGBColor[1., 1., 0.871],
+          FrameStyle->GrayLevel[0.5],
+          StripOnInput->False], 17],
+        TagBox["\"fideos\"", HoldForm]],
+       Annotation[#, 
+        HoldForm["fideos"], "Tooltip"]& ]}}],
+   Annotation[#, 
+    VertexCoordinateRules -> {{1.3587324409735149`, 7.246573018525412}, {
+     1.3587324409735149`, 6.340751391209736}, {0.45291081365783825`, 
+     5.4349297638940595`}, {0.45291081365783825`, 4.529108136578382}, {0., 
+     3.623286509262706}, {0.9058216273156765, 3.623286509262706}, {
+     1.3587324409735149`, 5.4349297638940595`}, {1.3587324409735149`, 
+     4.529108136578382}, {2.264554068289191, 5.4349297638940595`}, {
+     2.264554068289191, 4.529108136578382}, {2.264554068289191, 
+     3.623286509262706}, {2.264554068289191, 2.7174648819470297`}, {
+     1.811643254631353, 1.8116432546313526`}, {2.7174648819470297`, 
+     1.8116432546313526`}, {2.264554068289191, 0.9058216273156763}, {
+     2.264554068289191, 0.}, {3.170375695604868, 0.9058216273156763}}]& ],
+  AspectRatio->NCache[Rational[3, 5] 2^Rational[1, 2], 0.848528137423857],
+  FormatType:>StandardForm,
+  FrameTicks->Automatic,
+  PlotRange->All,
+  PlotRangePadding->Scaled[0.1]]], "Output",
+ CellChangeTimes->{3.674670936185128*^9}]
+}, Open  ]]
+},
+WindowSize->{1350, 709},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1.5 Inherited,
+FrontEndVersion->"11.0 for Microsoft Windows (64-bit) (June 5, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 100, 1, 45, "Input"],
+Cell[661, 23, 335, 8, 45, "Input"],
+Cell[999, 33, 1944, 29, 365, "Input"],
+Cell[2946, 64, 4120, 58, 510, "Input"],
+Cell[CellGroupData[{
+Cell[7091, 126, 554, 8, 45, "Input"],
+Cell[7648, 136, 47323, 1076, 2482, "Output"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[55008, 1217, 4584, 65, 151, "Input"],
+Cell[59595, 1284, 680, 12, 133, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[60312, 1301, 339, 7, 45, "Input"],
+Cell[60654, 1310, 26345, 719, 1492, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[87036, 2034, 565, 14, 75, "Input"],
+Cell[87604, 2050, 12540, 326, 359, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[100181, 2381, 621, 16, 75, "Input"],
+Cell[100805, 2399, 13230, 350, 473, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[114072, 2754, 926, 25, 133, "Input"],
+Cell[115001, 2781, 21195, 568, 429, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[136233, 3354, 730, 20, 104, "Input"],
+Cell[136966, 3376, 16760, 444, 499, "Output"]
+}, Open  ]]
+}
+]
+*)
+

@@ -12,6 +12,7 @@ psycopg2==2.6.1
 pyasn1==0.1.9
 pyasn1-modules==0.0.8
 redis==2.10.5
+requests==2.10.0
 rsa==3.4.2
 selenium==2.53.5
 simplejson==3.8.2

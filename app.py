@@ -162,10 +162,10 @@ url_parser_almacenar = 'https://www.wolframcloud.com/objects/user-6a1f03ec-fe00-
 
 image_codigo = 'http://beanimalheroes.org/es/wp-content/uploads/2016/03/foca-arpa-bebe.jpg'
 
-MENSAJE_NO_ENTIENDO = u'Habla bien'
+MENSAJE_NO_ENTIENDO = u'Disculpa, no te entiendo'
 CUAL_MONTO = u'¿Cuál fue el monto total?'
 CUAL_FECHA = u'Envíanos primero la fecha de tu compra'
-CUAL_CODIGO = u'Envíenos el código de la boleta (guíese de la imagen)'
+CUAL_CODIGO = u'Envíanos el código de la boleta por favor, guíate de la siguiente imagen:'
 
 
 @app.route(API_ROOT + FB_WEBHOOK, methods=["GET"])
@@ -253,7 +253,7 @@ def fb_receive_message():
                     for t_id in transaction_ids:
                         l.append([(x.name, x.price) for x in q if x.invoice_id == t_id])
                     p = get_recommended_product(transactions=l)
-                    send_message(sender, 'el producto sugerido es {} y su precio es {}'.format(p[0], p[1]))
+                    send_message(sender, 'El producto sugerido es {} y su precio es {}'.format(p[0], p[1]))
 
                 return 'chau postback'
 
@@ -261,11 +261,11 @@ def fb_receive_message():
                 # return 'Hi'
 
                 if 'message' not in message:
-                    send_message(sender, 'habla bien causa! en que producto te podemos ayudar')
+                    send_message(sender, 'Disculpa, no te entiendo. ¿En qué producto te podemos ayudar?')
                     return 'Hi'
 
                 if 'text' not in message['message']:
-                    send_message(sender, 'habla bien causa! en que producto te podemos ayudar')
+                    send_message(sender, 'Disculpa, no te entiendo. ¿En qué producto te podemos ayudar?')
                     return 'Hi'
 
                 text = message['message']['text']
@@ -284,7 +284,7 @@ def fb_receive_message():
                     status = parse_list['status']
                     if status == 'failed':
 
-                        send_fb_cart(sender, '¿Te podemos ayudar en algo de un producto?', 'Precio')
+                        send_fb_cart(sender, '¿Te podemos ayudar en algo acerca de un producto?', 'Precio')
                         # send_fb_cart(sender, 'Si te fuimos útil, sería de gran ayuda que nos compartas tus compras', 'Compartir')
 
                     else:
@@ -304,7 +304,7 @@ def fb_receive_message():
                                 quantity=count,
                             )
                             print total_price
-                            send_message(sender, 'el producto {} cuesta {} soles'.format(product, total_price))
+                            send_message(sender, 'El producto {} cuesta {} soles'.format(product, total_price))
 
                         q = (
                             db
@@ -333,7 +333,7 @@ def fb_receive_message():
                     parse_list = parse(url_parser_price, text)
                     status = parse_list['status']
                     if status == 'failed':
-                        send_message(sender, 'habla bien causa! en que producto te podemos ayudar')
+                        send_message(sender, 'Disculpa, no te entiendo. ¿En qué producto te podemos ayudar?')
                     else:
 
                         # Integracion codigo Hector
@@ -348,7 +348,7 @@ def fb_receive_message():
                                 unit_code=presentation,
                                 quantity=count,
                             )
-                            send_message(sender, 'el producto {} cuesta {} soles'.format(product, total_price))
+                            send_message(sender, 'El producto {} cuesta {} soles'.format(product, total_price))
 
                         flag.flag = FLAG_N
                         db.session.commit()
@@ -418,7 +418,7 @@ def fb_receive_message():
                             # send_message(sender, CUAL_CODIGO)
                             send_image(sender, CUAL_CODIGO, 'https://i.imgur.com/5Ydcva3.png')
                         else:
-                            send_message(sender, 'Gracias')
+                            send_message(sender, 'Muchas gracias por tu colaboración')
 
                             inv_id = parse_list['response'][0]
                             inv_date = tmp.invoice_date
@@ -505,7 +505,7 @@ def send_carrousel(sender, product_name, product_pric):
                                     "type": "postback"
                                 }
                             ],
-                            "title": "Deseas saber el precio del producto {}".format(product_name)
+                            "title": "¿Deseas saber el precio del producto {}?".format(product_name)
                         }
                     ],
                     "template_type": "generic"
